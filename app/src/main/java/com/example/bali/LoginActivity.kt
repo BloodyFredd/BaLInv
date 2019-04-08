@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         populateAutoComplete()
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
-        val btnOpenActivity : Button = findViewById(R.id.email_sign_in_button)
+
 
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
@@ -54,8 +54,16 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
 
         })
+        val btnOpenActivity : Button = findViewById(R.id.email_sign_in_button)
         btnOpenActivity.setOnClickListener {
-            val inten = Intent(this, WorkerActivity::class.java)
+            val inten = Intent(this, WorkerMenu::class.java)
+            startActivity(inten)
+
+        }
+
+        val ManagerbtnOpenActivity : Button = findViewById(R.id.Manager)
+        ManagerbtnOpenActivity.setOnClickListener {
+            val inten = Intent(this, ManagerActivity::class.java)
             startActivity(inten)
 
         }

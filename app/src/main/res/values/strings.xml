@@ -5,6 +5,7 @@
     <string name="prompt_password">Password (optional)</string>
     <string name="Bar_code">קוד מוצר</string>
     <string name="Product_Name">שם מוצר</string>
+    <string name="ManagerText">מנהל</string>
     <string name="Amount">כמות/משקל</string>
     <string name="Sale_Price">מחיר מכירה</string>
     <string name="action_sign_in">Sign in or register</string>
