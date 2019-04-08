@@ -20,9 +20,11 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.content.Intent
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.widget.Button
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -40,15 +42,24 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         setContentView(R.layout.activity_login)
         // Set up the login form.
         populateAutoComplete()
+
+        email_sign_in_button.setOnClickListener { attemptLogin() }
+        val btnOpenActivity : Button = findViewById(R.id.email_sign_in_button)
+
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
             }
             false
-        })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        })
+        btnOpenActivity.setOnClickListener {
+            val inten = Intent(this, WorkerActivity::class.java)
+            startActivity(inten)
+
+        }
+
     }
 
     private fun populateAutoComplete() {
