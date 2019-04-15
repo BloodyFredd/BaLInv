@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Bali</string>
+    <string name="app_name">בא לי מלאי</string>
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_email">אימייל</string>
+    <string name="prompt_password">סיסמה</string>
     <string name="Bar_code">קוד מוצר</string>
     <string name="Product_Name">שם מוצר</string>
     <string name="ManagerText">מנהל</string>
@@ -13,6 +13,8 @@
     <string name="Add_Worker">הוסף עובד</string>
     <string name="Worker_name">שם העובד</string>
     <string name="Remove_Worker">הסרה</string>
+    <string name="FirstName">שם פרטי</string>
+    <string name="LastName">שם משפחה</string>
     <string name="Reports">דוחות</string>
     <string name="Export_report">ייצוא דוח Excel</string>
     <string name="Search_Product">חיפוש פריט</string>

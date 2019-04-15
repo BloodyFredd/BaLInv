@@ -18,13 +18,16 @@ import android.provider.ContactsContract
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.content.Intent
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
-import android.widget.Button
+import android.app.ProgressDialog
+import android.widget.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -35,7 +38,18 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
+    private var First_Name: EditText? = null
+    private var Last_Name: EditText? = null
+    private var email: EditText? = null
+    private var password: EditText? = null
+    private var btnCreateAccount: Button? = null
+    private var login_progress: ProgressDialog? = null
+
     private var mAuthTask: UserLoginTask? = null
+
+    lateinit var ref: DatabaseReference
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +59,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
 
-
+        ref = FirebaseDatabase.getInstance().getReference("Users")
         password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
@@ -56,6 +70,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
         val btnOpenActivity : Button = findViewById(R.id.email_sign_in_button)
         btnOpenActivity.setOnClickListener {
+
             val inten = Intent(this, WorkerMenu::class.java)
             startActivity(inten)
 
@@ -69,6 +84,25 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
 
     }
+
+    private fun LoginUser(Name: String , Password: String)
+    {
+        mAuth.signInWithEmailAndPassword(Name, Password)
+            .addOnCompleteListener(this) {task ->
+                if (task.isSuccessful()) {
+
+                } else {
+                    // If sign in fails, display a message to the user.
+
+                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+
+                }
+
+                // ...
+            }
+
+    }
+
 
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
