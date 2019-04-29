@@ -23,54 +23,57 @@ import android.content.Intent
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.ProgressDialog
+import android.util.Log
 import android.widget.*
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.auth.FirebaseAuth
-
 
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity() {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    //private var mAuthTask: UserLoginTask? = null
 
-    private var First_Name: EditText? = null
-    private var Last_Name: EditText? = null
-    private var email: EditText? = null
-    private var password: EditText? = null
+    private val TAG = "LoginActivity"
+    //global variables
+    private var email: String? = null
+    private var password: String? = null
+    //UI elements
+    private var tvForgotPassword: TextView? = null
+    private var etEmail: EditText? = null
+    private var etPassword: EditText? = null
+    private var btnLogin: Button? = null
     private var btnCreateAccount: Button? = null
-    private var login_progress: ProgressDialog? = null
-
-    private var mAuthTask: UserLoginTask? = null
-
-    lateinit var ref: DatabaseReference
-    lateinit var mAuth: FirebaseAuth
+    private var mProgressBar: ProgressDialog? = null
+    //Firebase references
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         // Set up the login form.
-        populateAutoComplete()
+        //populateAutoComplete()
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        //email_sign_in_button.setOnClickListener { attemptLogin() }
 
-        ref = FirebaseDatabase.getInstance().getReference("Users")
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+
+        /*password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
             }
             false
 
-        })
-        val btnOpenActivity : Button = findViewById(R.id.email_sign_in_button)
+        })*/
+        val btnOpenActivity : Button = findViewById(R.id.sign_in)
         btnOpenActivity.setOnClickListener {
-
             val inten = Intent(this, WorkerMenu::class.java)
             startActivity(inten)
 
@@ -83,28 +86,72 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         }
 
+        initialise()
+
+
     }
 
-    private fun LoginUser(Name: String , Password: String)
-    {
-        mAuth.signInWithEmailAndPassword(Name, Password)
-            .addOnCompleteListener(this) {task ->
-                if (task.isSuccessful()) {
+    private fun initialise() {
+        tvForgotPassword = findViewById<View>(R.id.ForgotPass) as TextView
+        etEmail = findViewById<View>(R.id.email) as EditText
+        etPassword = findViewById<View>(R.id.password) as EditText
+        btnLogin = findViewById<View>(R.id.sign_in) as Button
+        //btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
+        mProgressBar = ProgressDialog(this)
+        mAuth = FirebaseAuth.getInstance()
+        tvForgotPassword!!
+            .setOnClickListener { startActivity(Intent(this@LoginActivity,
+                ForgotPasswordActivity::class.java)) }
+        //btnCreateAccount!!
+        //    .setOnClickListener { startActivity(Intent(this@LoginActivity,
+        //        CreateAccountActivity::class.java)) }
+        btnLogin!!.setOnClickListener { loginUser() }
+    }
 
-                } else {
-                    // If sign in fails, display a message to the user.
-
-                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-
+    private fun loginUser() {
+        email = etEmail?.text.toString()
+        password = etPassword?.text.toString()
+        val mail=email
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            mProgressBar!!.setMessage("Signing in...")
+            mProgressBar!!.show()
+            Log.d(TAG, "Logging in user.")
+            mAuth!!.signInWithEmailAndPassword(email!!, password!!)
+                .addOnCompleteListener(this) { task ->
+                    mProgressBar!!.hide()
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        if(mail=="omriavidan0402hn@gmail.com")
+                            ManagerupdateUI()
+                        else
+                            updateUI()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.e(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(this@LoginActivity, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
+        } else {
+            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-                // ...
-            }
+    private fun updateUI() {
+        val intent = Intent(this@LoginActivity, WorkerMenu::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
 
+    private fun ManagerupdateUI() {
+        val intent = Intent(this@LoginActivity, ManagerActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 
 
-    private fun populateAutoComplete() {
+    /*private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
             return
         }
@@ -356,5 +403,5 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
          * TODO: remove after connecting to a real authentication system.
          */
         private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
-    }
+    }*/
 }
