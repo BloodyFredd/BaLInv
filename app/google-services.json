@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "892476085109",
+    "firebase_url": "https://baliinv.firebaseio.com",
+    "project_id": "baliinv",
+    "storage_bucket": "baliinv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892476085109:android:6e626caccc5ecede",
+        "android_client_info": {
+          "package_name": "com.example.bali"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892476085109-f8fr76mcr9k7dqp9j58tc52u9rq5qais.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bali",
+            "certificate_hash": "d34c0c00495d6b4b6c11e4082f89c73e43ac74dd"
+          }
+        },
+        {
+          "client_id": "892476085109-bioqt96b4ssejlhpf1348bseqadotf2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUqqkifFoeDZRMb7DGV3wkBjTGXLua5DI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892476085109-bioqt96b4ssejlhpf1348bseqadotf2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
