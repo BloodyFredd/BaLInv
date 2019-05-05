@@ -34,16 +34,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <EditText
-                        android:id="@+id/WorkerName"
+                <ListView
+                        android:id="@+id/WorkersList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Worker_name"
-                        android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:layout_height="450sp"
+
+                        android:scrollbars="none"/>
+
 
 
             </android.support.design.widget.TextInputLayout>

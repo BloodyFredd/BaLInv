@@ -34,16 +34,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <EditText
-                        android:id="@+id/BarCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Bar_code"
-                        android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
+                <RelativeLayout android:id="@+id/relativeLayout1"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content">
+
+                    <EditText
+                            android:id="@+id/BarCode"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Bar_code"
+                            android:imeActionId="6"
+                            android:gravity="right"
+
+                            android:imeOptions="actionUnspecified"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:maxLines="1"
+                            android:singleLine="true"/>
+
+
+
+                    <Button android:text="סרוק"
+                            android:id="@+id/Scanner"
+                            android:textSize="13sp"
+                            android:layout_marginTop="4dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_height="wrap_content"
+                            android:layout_width="80dp">
+                    </Button>
+                </RelativeLayout>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -58,7 +77,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/Product_Name"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:gravity="right"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +95,8 @@
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionUnspecified"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:gravity="right"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -93,7 +114,8 @@
                         android:imeActionLabel="@string/action_sign_in_short"
                         android:imeOptions="actionUnspecified"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:gravity="right"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -104,8 +126,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:text="@string/Search_Product"
+                    android:textStyle="bold"/>
+
+            <Button
+                    android:id="@+id/Edit_product_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="@string/Change_Product"
                     android:textStyle="bold"/>
+
+
 
         </LinearLayout>
     </ScrollView>
