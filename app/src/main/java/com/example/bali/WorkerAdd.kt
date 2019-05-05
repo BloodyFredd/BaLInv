@@ -66,6 +66,7 @@ class WorkerAdd : AppCompatActivity() {
                 .createUserWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
                     mProgressBar!!.hide()
+                    mProgressBar!!.dismiss()
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
@@ -76,7 +77,7 @@ class WorkerAdd : AppCompatActivity() {
                         val currentUserDb = mDatabaseReference!!.child(userId)
                         currentUserDb.child("firstName").setValue(firstName)
                         currentUserDb.child("lastName").setValue(lastName)
-                        //updateUserInfoAndUI()
+                        updateUserInfoAndUI()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -93,7 +94,7 @@ class WorkerAdd : AppCompatActivity() {
 
     private fun updateUserInfoAndUI() {
         //start next activity
-        val intent = Intent(this@WorkerAdd, LoginActivity::class.java)
+        val intent = Intent(this@WorkerAdd, ManageWorkerActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
