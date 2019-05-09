@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
@@ -71,9 +72,12 @@ class ManageWorkerActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val childes=snapshot.children
                 for(Ks in childes) {
-                    var name = Ks.child("firstName").value as? String
-                    name += " " + Ks.child("lastName").value as? String
-                    Workers += name
+                    var flag: String? = Ks.child("flag").value as? String
+                    if(flag == "1") {
+                        var name = Ks.child("firstName").value as? String
+                        name += " " + Ks.child("lastName").value as? String
+                        Workers += name
+                    }
                 }
                 lvName!!.adapter = ArrayAdapter<String>(this@ManageWorkerActivity, android.R.layout.simple_list_item_1, Workers)
                 mProgressBar!!.dismiss()
@@ -88,7 +92,10 @@ class ManageWorkerActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
             R.id.Remove ->{
-                Toast.makeText(applicationContext, "Removing", Toast.LENGTH_LONG).show()
+                //Log.d("hjk", R)
+                Toast.makeText(applicationContext, "מוחק...", Toast.LENGTH_LONG).show()
+                //val currentUserDb = mDatabaseReference!!.child(item.toString())
+                //currentUserDb.child("flag").setValue("0")
                 return true
             }
             else -> super.onOptionsItemSelected(item)

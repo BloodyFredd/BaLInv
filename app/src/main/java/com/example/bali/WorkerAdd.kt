@@ -60,7 +60,7 @@ class WorkerAdd : AppCompatActivity() {
         val pass=password
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            mProgressBar!!.setMessage("Registering User...")
+            mProgressBar!!.setMessage("מוסיף משתמש...")
             mProgressBar!!.show()
             mAuth!!
                 .createUserWithEmailAndPassword(email!!, password!!)
@@ -72,10 +72,11 @@ class WorkerAdd : AppCompatActivity() {
                         Log.d(TAG, "createUserWithEmail:success")
                         val userId = mAuth!!.currentUser!!.uid
                         //Verify Email
-                        verifyEmail();
+                        verifyEmail()
                         //update user profile information
                         val currentUserDb = mDatabaseReference!!.child(userId)
                         currentUserDb.child("firstName").setValue(firstName)
+                        currentUserDb.child("flag").setValue("1")
                         currentUserDb.child("lastName").setValue(lastName)
                         updateUserInfoAndUI()
                     } else {
