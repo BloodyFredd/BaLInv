@@ -29,6 +29,7 @@ class ManageWorkerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTitle("רשימת עובדים")
         setContentView(R.layout.activity_manage_worker)
         val SearchbtnOpenActivity: Button = findViewById<View>(R.id.add_worker_button) as Button
         SearchbtnOpenActivity.setOnClickListener {
@@ -92,7 +93,7 @@ class ManageWorkerActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
             R.id.Remove ->{
-                //Log.d("hjk", R)
+                //Log.d("hjk", item.getItemId() as? String)
                 Toast.makeText(applicationContext, "מוחק...", Toast.LENGTH_LONG).show()
                 //val currentUserDb = mDatabaseReference!!.child(item.toString())
                 //currentUserDb.child("flag").setValue("0")

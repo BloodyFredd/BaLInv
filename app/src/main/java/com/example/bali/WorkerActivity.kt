@@ -38,6 +38,7 @@ class WorkerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTitle("הוספת פריט")
         setContentView(R.layout.activity_worker)
         //val Scanner : Button = findViewById(R.id.sign_in)
         db = FirebaseFirestore.getInstance()

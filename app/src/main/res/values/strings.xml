@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">בא לי מלאי</string>
-    <!-- Strings related to login -->
+    <string name="forgot_password_name">שכחתי סיסמה</string>
     <string name="prompt_email">אימייל</string>
     <string name="prompt_password">סיסמה</string>
     <string name="Bar_code">קוד מוצר</string>

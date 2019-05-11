@@ -9,6 +9,7 @@ class ManagerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTitle("תפריט מנהל")
         setContentView(R.layout.activity_manager)
 
         val SearchbtnOpenActivity: Button = findViewById(R.id.search_product)

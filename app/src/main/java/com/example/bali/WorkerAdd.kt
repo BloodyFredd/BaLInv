@@ -35,6 +35,7 @@ class WorkerAdd : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTitle("הוספת עובד חדש")
         setContentView(R.layout.activity_worker_add)
         initialise()
     }
