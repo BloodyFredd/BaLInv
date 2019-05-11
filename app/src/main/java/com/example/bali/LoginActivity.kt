@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("התחברות")
+        supportActionBar?.title = "התחברות                                                      "
         setContentView(R.layout.activity_login)
         // Set up the login form.
         //populateAutoComplete()

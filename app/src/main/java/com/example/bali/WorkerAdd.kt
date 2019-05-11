@@ -35,7 +35,7 @@ class WorkerAdd : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("הוספת עובד חדש")
+        supportActionBar?.title = "הוספת עובד חדש                                                     "
         setContentView(R.layout.activity_worker_add)
         initialise()
     }
@@ -48,7 +48,7 @@ class WorkerAdd : AppCompatActivity() {
         btnCreateAccount = findViewById<View>(R.id.email_sign_in_button) as Button
         mProgressBar = ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference!!.child("Users")
+        mDatabaseReference = mDatabase!!.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
         btnCreateAccount!!.setOnClickListener { createNewAccount() }
     }
@@ -58,7 +58,6 @@ class WorkerAdd : AppCompatActivity() {
         lastName = etLastName?.text.toString()
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
-        val pass=password
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             mProgressBar!!.setMessage("מוסיף משתמש...")
@@ -102,7 +101,7 @@ class WorkerAdd : AppCompatActivity() {
     }
 
     private fun verifyEmail() {
-        val mUser = mAuth!!.currentUser;
+        val mUser = mAuth!!.currentUser
         mUser!!.sendEmailVerification()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

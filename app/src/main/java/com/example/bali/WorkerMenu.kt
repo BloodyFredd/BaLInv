@@ -9,7 +9,7 @@ class WorkerMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("תפריט עובד")
+        supportActionBar?.title = "תפריט עובד                                                     "
         setContentView(R.layout.activity_worker_menu)
 
         val SearchbtnOpenActivity: Button = findViewById(R.id.search_product)

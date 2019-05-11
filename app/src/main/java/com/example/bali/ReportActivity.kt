@@ -7,7 +7,7 @@ class ReportActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("ייצוא דוחות")
+        supportActionBar?.title = "ייצוא דוחות                                                     "
         setContentView(R.layout.activity_report)
     }
 }

@@ -21,7 +21,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("שכחתי סיסמה")
+        supportActionBar?.title = "שכחתי סיסמה                                                     "
         setContentView(R.layout.activity_forgot_password)
         initialise()
     }

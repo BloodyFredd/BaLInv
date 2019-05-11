@@ -38,12 +38,12 @@ class WorkerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("הוספת פריט")
+        supportActionBar?.title = "הוספת פריט                                                     "
         setContentView(R.layout.activity_worker)
         //val Scanner : Button = findViewById(R.id.sign_in)
         db = FirebaseFirestore.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference!!.child("Items")
+        mDatabaseReference = mDatabase!!.reference.child("Items")
         ProductCode = findViewById<View>(R.id.BarCode) as EditText
         ProductName = findViewById<View>(R.id.ProductName) as EditText
         ProductAmount = findViewById<View>(R.id.Amount) as EditText
@@ -63,7 +63,7 @@ class WorkerActivity : AppCompatActivity() {
             val scanner = IntentIntegrator(this)
             scanner.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES)
             scanner.setBeepEnabled(false)
-            scanner.setCaptureActivity(Cap::class.java);
+            scanner.setCaptureActivity(Cap::class.java)
             scanner.setOrientationLocked(true)
 
             scanner.initiateScan()
@@ -83,7 +83,7 @@ class WorkerActivity : AppCompatActivity() {
         && !TextUtils.isEmpty(PAmount) && !TextUtils.isEmpty(PPrice)) {
 
             val currentUserDb = mDatabaseReference
-            var ItemId=currentUserDb!!.child(PCode)
+            val ItemId=currentUserDb!!.child(PCode)
             ItemId.child("ProductName").setValue(PName)
             ItemId.child("ProductAmount").setValue(PAmount)
             ItemId.child("SalePrice").setValue(PPrice)

@@ -36,11 +36,11 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTitle("חיפוש פריט")
+        supportActionBar?.title = "חיפוש פריט                                                     "
         setContentView(R.layout.activity_search)
 
         mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference!!.child("Items")
+        mDatabaseReference = mDatabase!!.reference.child("Items")
         ProductCode = findViewById<View>(R.id.BarCode) as EditText
         ProductName = findViewById<View>(R.id.ProductName) as EditText
         ProductAmount = findViewById<View>(R.id.Amount) as EditText
@@ -60,7 +60,7 @@ class SearchActivity : AppCompatActivity() {
             val scanner = IntentIntegrator(this)
             scanner.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES)
             scanner.setBeepEnabled(false)
-            scanner.setCaptureActivity(Cap::class.java);
+            scanner.setCaptureActivity(Cap::class.java)
             scanner.setOrientationLocked(true)
 
             scanner.initiateScan()
