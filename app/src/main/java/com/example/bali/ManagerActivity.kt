@@ -37,6 +37,12 @@ class ManagerActivity : AppCompatActivity() {
             val intent = Intent(this, ReportActivity::class.java)
             startActivity(intent)
         }
+
+        val InventorybtnOpenActivity: Button = findViewById(R.id.inventory_button)
+        InventorybtnOpenActivity.setOnClickListener {
+            val intent = Intent(this, InventoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
