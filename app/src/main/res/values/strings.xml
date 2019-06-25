@@ -16,6 +16,7 @@
     <string name="FirstName">שם פרטי</string>
     <string name="LastName">שם משפחה</string>
     <string name="AutoInc">מספור אוטומטי</string>
+    <string name="DateChange">תאריך שינוי:</string>
     <string name="Reports">דוחות</string>
     <string name="ForgotPass">שכחתי סיסמה</string>
     <string name="Export_report">ייצוא דוח Excel</string>

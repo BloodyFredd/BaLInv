@@ -10,10 +10,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
@@ -27,6 +24,7 @@ class SearchActivity : AppCompatActivity() {
     private var ProductName: EditText? = null
     private var ProductAmount: EditText? = null
     private var SalePrice: EditText? = null
+    private var DateChange: TextView? = null
     private var SearchItem: Button? = null
     private var EditItem: Button? = null
     private var mDatabaseReference: DatabaseReference? = null
@@ -44,6 +42,7 @@ class SearchActivity : AppCompatActivity() {
         ProductCode = findViewById<View>(R.id.BarCode) as EditText
         ProductName = findViewById<View>(R.id.ProductName) as EditText
         ProductAmount = findViewById<View>(R.id.Amount) as EditText
+        DateChange = findViewById<View>(R.id.DateChange) as TextView
         SalePrice = findViewById<View>(R.id.SalePrice) as EditText
         SearchItem = findViewById<View>(R.id.search_product_button) as Button
         EditItem = findViewById<View>(R.id.Edit_product_button) as Button
@@ -90,7 +89,7 @@ class SearchActivity : AppCompatActivity() {
         val PPrice = SalePrice?.text.toString()
 
         if (!TextUtils.isEmpty(PCode)) {
-            mProgressBar!!.setMessage("טוען עובדים...")
+            mProgressBar!!.setMessage("טוען מוצרים...")
             mProgressBar!!.show()
             mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -98,6 +97,7 @@ class SearchActivity : AppCompatActivity() {
                     ProductName?.setText(ItemId.child("ProductName").value.toString())
                     ProductAmount?.setText(ItemId.child("ProductAmount").value.toString())
                     SalePrice?.setText(ItemId.child("SalePrice").value.toString())
+                    DateChange?.setText("תאריך שינוי:  " + ItemId.child("ChangeDate").value.toString())
                     mProgressBar!!.dismiss()
                 }
 

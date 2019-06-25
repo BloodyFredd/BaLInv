@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser
 
 
 class ManageWorkerActivity : AppCompatActivity() {
-
+    var map = mutableMapOf<String, String>()
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mAuth: FirebaseAuth? = null
@@ -79,13 +79,18 @@ class ManageWorkerActivity : AppCompatActivity() {
         mProgressBar!!.show()
         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                Workers.clear()
                 val childes=snapshot.children
                 for(Ks in childes) {
                     val flag: String? = Ks.child("flag").value as? String
+                    var UserCode=Ks.key.toString()
+                    //Log.d("whattttttttttt?????????", UserCode)
+
                     if(flag == "1") {
                         var name = Ks.child("firstName").value as? String
                         name += " " + Ks.child("lastName").value as? String
                         Workers += name
+                        map[name.toString()] = UserCode
                     }
                 }
                 lvName!!.adapter = ArrayAdapter<String>(this@ManageWorkerActivity, android.R.layout.simple_list_item_1, Workers)
@@ -102,11 +107,11 @@ class ManageWorkerActivity : AppCompatActivity() {
         return when (item!!.itemId) {
             R.id.Remove ->{
                 val info = item.menuInfo as AdapterContextMenuInfo
-                Log.d("whattttttttttt?????????", Workers[info.position])
+                Log.d("whattttttttttt?????????", map.get(Workers[info.position]))
+                var UserC = map.get(Workers[info.position]).toString()
                 Toast.makeText(applicationContext, "מוחק...", Toast.LENGTH_LONG).show()
                 Workers[info.position]
-                val currentUserDb = mDatabaseReference!!.child(Workers[info.position].toString())
-                    //.child(info.position.toString())
+                val currentUserDb = mDatabaseReference!!.child(UserC)
                 currentUserDb.child("flag").setValue("0")
                 return true
             }

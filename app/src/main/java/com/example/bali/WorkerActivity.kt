@@ -21,6 +21,8 @@ import com.google.zxing.integration.android.IntentIntegrator
 //import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_worker.*
 import org.w3c.dom.Document
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WorkerActivity : AppCompatActivity() {
 
@@ -77,6 +79,8 @@ class WorkerActivity : AppCompatActivity() {
         val PName = ProductName?.text.toString()
         val PAmount = ProductAmount?.text.toString()
         val PPrice = SalePrice?.text.toString()
+        val s = SimpleDateFormat("dd/MM/yy   hh:mm")
+        val format = s.format(Date())
         mProgressBar!!.setMessage("מוסיף פריט...")
         mProgressBar!!.show()
         if (!TextUtils.isEmpty(PCode) && !TextUtils.isEmpty(PName)
@@ -87,6 +91,7 @@ class WorkerActivity : AppCompatActivity() {
             ItemId.child("ProductName").setValue(PName)
             ItemId.child("ProductAmount").setValue(PAmount)
             ItemId.child("SalePrice").setValue(PPrice)
+            ItemId.child("ChangeDate").setValue(format)
             ProductCode?.setText("")
             ProductName?.setText("")
             ProductAmount?.setText("")

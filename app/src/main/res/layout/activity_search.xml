@@ -120,6 +120,21 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:id="@+id/DateChange"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/DateChange"
+                        android:textSize="20sp"
+                        android:gravity="right"
+                        android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
             <Button
                     android:id="@+id/search_product_button"
                     style="?android:textAppearanceSmall"
