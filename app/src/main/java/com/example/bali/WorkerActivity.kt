@@ -92,6 +92,7 @@ class WorkerActivity : AppCompatActivity() {
             ItemId.child("ProductAmount").setValue(PAmount)
             ItemId.child("SalePrice").setValue(PPrice)
             ItemId.child("ChangeDate").setValue(format)
+            ItemId.child("Percentages").setValue("0")
             ProductCode?.setText("")
             ProductName?.setText("")
             ProductAmount?.setText("")

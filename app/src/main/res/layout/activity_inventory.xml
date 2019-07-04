@@ -25,6 +25,14 @@
             android:layout_marginTop="16dp"
             android:text="@string/DeleteInv"
             android:textStyle="bold"/>
+        <Button
+                android:id="@+id/AddPercentage"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/PercentagesAdd"
+                android:textStyle="bold"/>
 
     </LinearLayout>
     </ScrollView>

@@ -92,7 +92,8 @@ class ManageWorkerActivity : AppCompatActivity() {
                         map[name.toString()] = UserCode
                     }
                 }
-                lvName!!.adapter = ArrayAdapter<String>(this@ManageWorkerActivity, android.R.layout.simple_list_item_1, Workers)
+                lvName!!.adapter =
+                    ArrayAdapter<String>(this@ManageWorkerActivity, android.R.layout.simple_list_item_1, Workers) as ListAdapter?
                 mProgressBar!!.dismiss()
 
                 registerForContextMenu(lvName)

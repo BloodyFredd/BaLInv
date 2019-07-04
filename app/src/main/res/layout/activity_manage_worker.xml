@@ -55,14 +55,7 @@
                     android:text="@string/Add_Worker"
                     android:textStyle="bold"/>
 
-            <Button
-                    android:id="@+id/remove_worker_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/Remove_Worker"
-                    android:textStyle="bold"/>
+
 
         </LinearLayout>
     </ScrollView>
