@@ -25,7 +25,8 @@
         <activity android:name=".ManageWorkerActivity" />
         <activity android:name=".ManagerActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".WorkerMenu" />
+        <activity android:name=".WorkerMenu"
+                  android:theme="@style/Theme.BlueTheme"/>
         <activity android:name=".WorkerActivity" />
         <activity
                 android:name=".Cap"

@@ -96,6 +96,7 @@ class InventoryActivity : AppCompatActivity() {
                     currentChild.child("ProductAmount").setValue("0")
 
                 }
+                mDatabaseReference!!.removeEventListener(this)
             }
 
         })
@@ -138,7 +139,9 @@ class InventoryActivity : AppCompatActivity() {
 
                 mDatabaseReferenceInventory!!.child(format).setValue(Sum)
                 Sum = 0.0
+                mDatabaseReference!!.removeEventListener(this)
             }
         })
+
     }
 }

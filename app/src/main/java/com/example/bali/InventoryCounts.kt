@@ -63,7 +63,7 @@ class InventoryCounts : AppCompatActivity() {
                 for(Ks in childes) {
                     var name = "ספירת מלאי לשנת "
                     name += Ks.key.toString() +": "
-                    name += Ks.value as? String
+                    name += Ks.value.toString()
                     InventoryArray += name
 
                 }

@@ -2,5 +2,11 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#F31464</color>
+    <color name="colorLightGreen">#F6FDEF</color>
+    <color name="colorButtonGreen">#01A795</color>
+    <color name="colorBlack">#423F3F</color>
+    <color name="colorButtonBlue">#52A4FF</color>
+    <color name="colorBackgroundBlue">#E4ECFF</color>
+    <color name="colorActionBarBlue">#0760BB</color>
 </resources>
