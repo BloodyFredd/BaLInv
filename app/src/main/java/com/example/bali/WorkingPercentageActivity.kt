@@ -29,7 +29,7 @@ class WorkingPercentageActivity : AppCompatActivity() {
     private var tvEmailVerifiied: TextView? = null
     private var mProgressBar: ProgressDialog? = null
     private val Items =  ArrayList<String?>()
-
+    private var NShown: CheckBox? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +45,10 @@ class WorkingPercentageActivity : AppCompatActivity() {
         mProgressBar = ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
+        NShown = findViewById<View>(R.id.CheckB) as CheckBox
+        NShown!!.setOnClickListener{
+            LoadItems()
+        }
         //tvLastName = findViewById<View>(R.id.tv_last_name) as TextView
         // tvEmail = findViewById<View>(R.id.tv_email) as TextView
         //tvEmailVerifiied = findViewById<View>(R.id.tv_email_verifiied) as TextView
@@ -58,15 +62,10 @@ class WorkingPercentageActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //val mUser = mDatabaseReference!!.child("Users")//mAuth!!.currentUser
-        //var muser = FirebaseAuth.getInstance().
+        LoadItems()
+    }
 
-        //val mUserReference = mDatabaseReference!!.child("Users")
-
-        //tvEmail!!.text = mUser.email
-        //tvEmailVerifiied!!.text = mUser.isEmailVerified.toString()
-        //val Workers =  ArrayList<String?>()
-
+    fun LoadItems(){
         mProgressBar!!.setMessage("טוען פריטים...")
         mProgressBar!!.show()
         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
@@ -75,13 +74,28 @@ class WorkingPercentageActivity : AppCompatActivity() {
                 val childes=snapshot.children
                 for(Ks in childes) {
                     val Amount: String? = Ks.child("ProductAmount").value as? String
-                    if(Amount != "0") {
-                        var BarCode = Ks.key.toString()
-                        var name = Ks.child("ProductName").value as? String
-                        name += "\nאחוז עבודה: " //+ (Ks.child("Percentages").value as? String)
-                        name += Ks.child("Percentages").value as? String
-                        name += "\n" + BarCode
-                        Items += name
+                    if(NShown!!.isChecked == false){
+                        if(Amount != "0") {
+
+                            var BarCode = Ks.key.toString()
+                            var name = Ks.child("ProductName").value as? String
+                            name += "\nאחוז עבודה: " //+ (Ks.child("Percentages").value as? String)
+                            name += Ks.child("Percentages").value as? String
+                            name += "\n" + BarCode
+                            Items += name
+                        }
+                    }
+                    else
+                    {
+                        if(Ks.child("Percentages").value as? String =="0")
+                        {
+                            var BarCode = Ks.key.toString()
+                            var name = Ks.child("ProductName").value as? String
+                            name += "\nאחוז עבודה: " //+ (Ks.child("Percentages").value as? String)
+                            name += Ks.child("Percentages").value as? String
+                            name += "\n" + BarCode
+                            Items += name
+                        }
                     }
                 }
                 lvName!!.adapter = ArrayAdapter<String>(this@WorkingPercentageActivity, android.R.layout.simple_list_item_1, Items) as ListAdapter?
@@ -126,17 +140,12 @@ class WorkingPercentageActivity : AppCompatActivity() {
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
-            R.id.Change ->{
+            R.id.ChangeMenu ->{
                 val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-
-                //var LastNL = Items[info.position]!!.lastIndexOf("\n")
                 var ItemCode = Items[info.position]!!.substringAfterLast("\n")
                 Log.d("whattttttttttt?????????", ItemCode)
                 ChangeDialog(ItemCode)
 
-
-                //val currentUserDb = mDatabaseReference!!.child(ItemCode)
-                //currentUserDb.child("flag").setValue("0")
                 return true
             }
             else -> super.onOptionsItemSelected(item)

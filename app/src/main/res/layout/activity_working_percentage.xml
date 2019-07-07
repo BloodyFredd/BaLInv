@@ -21,30 +21,45 @@
                 android:layout_marginBottom="8dp"
                 android:visibility="gone"/>
 
-        <ScrollView
-                android:id="@+id/login_form"
+    <ScrollView
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <LinearLayout
-                    android:id="@+id/email_login_form"
+            <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <android.support.design.widget.TextInputLayout
+                    android:layout_height="wrap_content">
+
+                <ListView
+                        android:id="@+id/ItemsList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="450sp"
 
-                    <ListView
-                            android:id="@+id/ItemsList"
-                            android:layout_width="match_parent"
-                            android:layout_height="450sp"
-
-                            android:scrollbars="none"/>
+                        android:scrollbars="none" />
 
 
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-        </ScrollView>
+
+            <CheckBox
+                    android:id="@+id/CheckB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="110dp"
+                    android:button="@null"
+
+                    android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/NonUpdated_products"
+                    android:textSize="25dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
     </LinearLayout>

@@ -10,7 +10,7 @@
     <string name="Sale_Price">מחיר מכירה</string>
     <string name="action_sign_in">התחברות</string>
     <string name="Add_Product">הוסף פריט</string>
-    <string name="Add_Worker">הוסף עובד</string>
+    <string name="Add_Worker">נהל עובדים</string>
     <string name="Worker_name">שם העובד</string>
     <string name="Remove_Worker">הסרה</string>
     <string name="FirstName">שם פרטי</string>
@@ -22,7 +22,10 @@
     <string name="Reports">דוחות</string>
     <string name="PercentagesAdd">עדכן אחוזי עבודה</string>
     <string name="ForgotPass">שכחתי סיסמה</string>
+    <string name="FinishCount">סיום ספירה</string>
+    <string name="InvenCounts">ספירות מלאי</string>
     <string name="Export_report">ייצוא דוח Excel</string>
+    <string name="NonUpdated_products">הצג מוצרים שלא עודכנו</string>
     <string name="ResetPass">שלח לי מייל לאיפוס סיסמה</string>
     <string name="Search_Product">חיפוש פריט</string>
     <string name="Change_Product">ערוך פריט</string>
