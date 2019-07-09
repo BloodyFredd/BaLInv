@@ -37,6 +37,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "חיפוש פריט                                                     "
+        setTheme(R.style.PinkAppTheme)
         setContentView(R.layout.activity_search)
 
         mDatabase = FirebaseDatabase.getInstance()

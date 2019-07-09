@@ -16,11 +16,24 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="Theme.BlueTheme" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarStyle">@color/colorActionBarBlue</item>
+
+
+
+    <style name="BlueAppTheme" parent="@android:style/Theme.Holo.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorActionBarBlue</item>
+        <item name="colorPrimaryDark">@color/colorActionBarBlue</item>
+        <item name="colorAccent">@color/colorActionBarBlue</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="BlueActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/colorActionBarBlue</item>
+    <style name="PinkAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorActionBarPink</item>
+        <item name="colorPrimaryDark">@color/colorActionBarPink</item>
+        <item name="colorAccent">@color/colorActionBarPink</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

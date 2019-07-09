@@ -9,7 +9,9 @@ class WorkerMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         supportActionBar?.title = "תפריט עובד                                                     "
+        setTheme(R.style.BlueAppTheme)
         setContentView(R.layout.activity_worker_menu)
 
         val SearchbtnOpenActivity: Button = findViewById(R.id.search_product)

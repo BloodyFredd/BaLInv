@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context=".LoginActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center_horizontal"
+        android:background="@color/colorBackgroundBlue"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context=".LoginActivity">
 
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorActionBarBlue"
+            android:layout_marginBottom="15dp"
+            app:titleTextColor="#fff"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="הוספת פריט"
+                android:textSize="22sp"
+                android:layout_gravity="right"
+                android:textColor="#D8FFFFFF"
+                android:layout_marginRight="10dp"
+                android:id="@+id/toolbar_title" />
+    </android.support.v7.widget.Toolbar>
+    <!-- Login progress -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:gravity="center_horizontal"
+            android:background="@color/colorBackgroundBlue"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context=".LoginActivity">
     <!-- Login progress -->
     <ProgressBar
             android:id="@+id/login_progress"
@@ -39,7 +74,7 @@
 
                 <EditText
                         android:id="@+id/BarCode"
-                        android:layout_width="300dp"
+                        android:layout_width="280dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/Bar_code"
                         android:imeActionId="6"
@@ -55,10 +90,13 @@
 
                     <Button android:text="סרוק"
                             android:id="@+id/Scanner"
-                            android:textSize="13sp"
+                            android:textSize="17sp"
                             android:layout_marginTop="4dp"
                             android:layout_alignParentLeft="true"
-                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_pink_round"
+                            android:textColor="#E9FFFFFF"
+                            android:layout_height="40dp"
+                            android:textStyle="bold"
                             android:layout_width="80dp">
                     </Button>
                 </RelativeLayout>
@@ -82,12 +120,6 @@
                         android:gravity="right"/>
 
             </android.support.design.widget.TextInputLayout>
-
-
-
-
-
-
 
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -130,20 +162,53 @@
             <Button
                     android:id="@+id/add_product_button"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="230dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/Add_Product"
+                    android:layout_gravity="center"
+                    android:textColor="#E9FFFFFF"
+                    android:background="@drawable/button_blue_round"
                     android:textStyle="bold"/>
             <Button
                     android:id="@+id/AutoInc"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="230dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="16dp"
+                    android:layout_gravity="center"
                     android:text="@string/AutoInc"
+                    android:textColor="#E9FFFFFF"
+                    android:background="@drawable/button_blue_round"
                     android:textStyle="bold"/>
+        <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="35dp">
+            <Button
+                    android:id="@+id/decrement"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="-7dp"
+                    android:singleLine="true"
+                    android:background="@drawable/ic_remove_circle_blue_24dp"
+                    />
 
+            <Button
+                    android:id="@+id/Increment"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="120dp"
+                    android:singleLine="true"
+                    android:background="@drawable/ic_add_circle_blue_24dp"
+                    />
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 </LinearLayout>

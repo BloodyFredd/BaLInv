@@ -37,10 +37,16 @@ class WorkerActivity : AppCompatActivity() {
     private var mDatabase: FirebaseDatabase? = null
     private var mProgressBar: ProgressDialog? = null
     private var AutoIncrement: Button? = null
+    private var IncrementBtn: Button? = null
+    private var DecrementBtn: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         supportActionBar?.title = "הוספת פריט                                                     "
+        setTheme(R.style.BlueAppTheme)
         setContentView(R.layout.activity_worker)
         //val Scanner : Button = findViewById(R.id.sign_in)
         db = FirebaseFirestore.getInstance()
@@ -52,6 +58,8 @@ class WorkerActivity : AppCompatActivity() {
         SalePrice = findViewById<View>(R.id.SalePrice) as EditText
         AddItem = findViewById<View>(R.id.add_product_button) as Button
         AutoIncrement = findViewById<View>(R.id.AutoInc) as Button
+        IncrementBtn = findViewById<View>(R.id.Increment) as Button
+        DecrementBtn = findViewById<View>(R.id.decrement) as Button
         mProgressBar = ProgressDialog(this)
         AddItem!!.setOnClickListener{
             AddItemF()
@@ -69,6 +77,32 @@ class WorkerActivity : AppCompatActivity() {
             scanner.setOrientationLocked(true)
 
             scanner.initiateScan()
+        }
+
+        IncrementBtn!!.setOnClickListener{
+
+           var temp = ProductAmount?.text.toString()
+            var Amount = 0
+            if(!TextUtils.isEmpty(temp))
+                Amount=temp.toInt()
+            Amount+=1
+            ProductAmount?.setText(Amount.toString())
+        }
+
+        DecrementBtn!!.setOnClickListener{
+
+            var temp = ProductAmount?.text.toString()
+            var Amount = 0
+            if(!TextUtils.isEmpty(temp))
+                Amount=temp.toInt()
+            if(Amount == 0)
+                Toast.makeText(this, "לא ניתן להפחית!",
+                    Toast.LENGTH_SHORT).show()
+            if(Amount != 0)
+                Amount -= 1
+
+
+            ProductAmount?.setText(Amount.toString())
         }
     }
 

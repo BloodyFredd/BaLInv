@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -36,6 +37,7 @@ class WorkerAdd : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "הוספת עובד חדש                                                     "
+        setTheme(R.style.BlueAppTheme)
         setContentView(R.layout.activity_worker_add)
         initialise()
     }
@@ -51,6 +53,8 @@ class WorkerAdd : AppCompatActivity() {
         mDatabaseReference = mDatabase!!.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
         btnCreateAccount!!.setOnClickListener { createNewAccount() }
+
+
     }
 
     private fun createNewAccount() {

@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context=".LoginActivity">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center_horizontal"
+        android:background="@color/colorBackgroundBlue"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context=".LoginActivity">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorActionBarBlue"
+            android:layout_marginBottom="15dp"
+            app:titleTextColor="#fff"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
 
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ניהול עובדים"
+                android:textSize="22sp"
+                android:layout_gravity="right"
+                android:textColor="#D8FFFFFF"
+                android:layout_marginRight="10dp"
+                android:id="@+id/toolbar_title" />
+    </android.support.v7.widget.Toolbar>
+    <!-- Login progress -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:gravity="center_horizontal"
+            android:background="@color/colorBackgroundBlue"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context=".LoginActivity">
     <ProgressBar
             android:id="@+id/login_progress"
             style="?android:attr/progressBarStyleLarge"
@@ -24,7 +57,7 @@
     <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
         <LinearLayout
                 android:id="@+id/email_login_form"
@@ -49,9 +82,13 @@
             <Button
                     android:id="@+id/add_worker_button"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="110dp"
+                    android:layout_width="230dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="88dp"
+                    android:background="@drawable/button_blue_round"
+                    android:textColor="#E9FFFFFF"
+                    android:textSize="17dp"
                     android:text="@string/Add_Worker"
                     android:textStyle="bold"/>
 
@@ -59,4 +96,5 @@
 
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 </LinearLayout>
