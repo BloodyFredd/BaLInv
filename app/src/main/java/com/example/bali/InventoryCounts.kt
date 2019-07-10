@@ -68,7 +68,7 @@ class InventoryCounts : AppCompatActivity() {
 
                 }
                 lvName!!.adapter =
-                    ArrayAdapter<String>(this@InventoryCounts, android.R.layout.simple_list_item_1, InventoryArray) as ListAdapter?
+                    ArrayAdapter<String>(this@InventoryCounts, android.R.layout.simple_list_item_1, InventoryArray)
                 mProgressBar!!.dismiss()
 
                 registerForContextMenu(lvName)
