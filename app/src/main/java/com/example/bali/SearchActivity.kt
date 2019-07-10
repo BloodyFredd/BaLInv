@@ -74,9 +74,9 @@ class SearchActivity : AppCompatActivity() {
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
                 if (result.contents == null) {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "בוטל", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "נסרק: " + result.contents, Toast.LENGTH_LONG).show()
                     ProductCode!!.setText(result.contents)
                 }
             } else {

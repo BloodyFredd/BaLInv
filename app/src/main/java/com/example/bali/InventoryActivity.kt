@@ -92,7 +92,6 @@ class InventoryActivity : AppCompatActivity() {
                 val childes=snapshot.children
                 for(Ks in childes) {
                     val currentChild = mDatabaseReference!!.child(Ks.key.toString())
-                    Log.d("whattttttttttt?????????", Ks.key.toString())
                     currentChild.child("ProductAmount").setValue("0")
 
                 }
@@ -122,7 +121,6 @@ class InventoryActivity : AppCompatActivity() {
                     ProductBuyingPrice = (Ks.child("SalePrice").value as? String)!!.toDouble()
 
                     if(PercentageAmount != 0.0 && ProductAmount != 0.0) {
-                        Log.d("whattttttttttt?????????", PercentageAmount.toString() )
                         PercentageAmount = ((100-PercentageAmount)/100)
                         ProductBuyingPrice = (ProductBuyingPrice/1.17)*PercentageAmount
                         Sum += ProductAmount*ProductBuyingPrice
@@ -132,7 +130,6 @@ class InventoryActivity : AppCompatActivity() {
                     ProductBuyingPrice = 0.0
 
                 }
-                Log.d("whattttttttttt?????????", Sum.toString() )
                 mDatabaseReferenceInventory = mDatabase!!.reference.child("InventoryCounts")
                 val s = SimpleDateFormat("yyyy")
                 val format = s.format(Date())
