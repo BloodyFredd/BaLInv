@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
@@ -27,11 +28,14 @@ class SearchActivity : AppCompatActivity() {
     private var ProductAmount: EditText? = null
     private var SalePrice: EditText? = null
     private var DateChange: TextView? = null
+    private var WorkerName: TextView? = null
     private var SearchItem: Button? = null
     private var EditItem: Button? = null
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mProgressBar: ProgressDialog? = null
+    private var mUsersDatabaseReference: DatabaseReference? = null
+    private var mAuth: FirebaseAuth? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,8 @@ class SearchActivity : AppCompatActivity() {
 
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
+        mUsersDatabaseReference = mDatabase!!.reference.child("Users")
+        mAuth = FirebaseAuth.getInstance()
         ProductCode = findViewById<View>(R.id.BarCode) as EditText
         ProductName = findViewById<View>(R.id.ProductName) as EditText
         ProductAmount = findViewById<View>(R.id.Amount) as EditText
@@ -49,7 +55,9 @@ class SearchActivity : AppCompatActivity() {
         SalePrice = findViewById<View>(R.id.SalePrice) as EditText
         SearchItem = findViewById<View>(R.id.search_product_button) as Button
         EditItem = findViewById<View>(R.id.Edit_product_button) as Button
+        WorkerName = findViewById<View>(R.id.WorkerName) as TextView
         mProgressBar = ProgressDialog(this)
+
 
         SearchItem!!.setOnClickListener {
             SearchItem()
@@ -99,7 +107,9 @@ class SearchActivity : AppCompatActivity() {
                     ProductAmount?.setText(ItemId.child("ProductAmount").value.toString())
                     SalePrice?.setText(ItemId.child("SalePrice").value.toString())
                     DateChange?.setText("תאריך שינוי:  " + ItemId.child("ChangeDate").value.toString())
+                    WorkerName?.setText("שם העובד/ת:  " + ItemId.child("WorkerName").value.toString() )
                     mProgressBar!!.dismiss()
+                    mDatabaseReference!!.removeEventListener(this)
                 }
 
 
@@ -126,30 +136,38 @@ class SearchActivity : AppCompatActivity() {
         mProgressBar!!.setMessage("מעדכן פריט...")
         mProgressBar!!.show()
         if (!TextUtils.isEmpty(PCode) && !TextUtils.isEmpty(PName)
-            && !TextUtils.isEmpty(PAmount) && !TextUtils.isEmpty(PPrice)
-        ) {
+            && !TextUtils.isEmpty(PAmount) && !TextUtils.isEmpty(PPrice)) {
 
-            val ItemId = mDatabaseReference!!.child(PCode)
+            val currentUserDb = mDatabaseReference
+            val ItemId=currentUserDb!!.child(PCode)
             ItemId.child("ProductName").setValue(PName)
             ItemId.child("ProductAmount").setValue(PAmount)
             ItemId.child("SalePrice").setValue(PPrice)
             ItemId.child("ChangeDate").setValue(format)
+            ItemId.child("Percentages").setValue("0")
+            mUsersDatabaseReference!!.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var Username=""
+                    Username = snapshot.child(mAuth!!.currentUser!!.uid).child("firstName").value.toString() + " "
+                    Username += snapshot.child(mAuth!!.currentUser!!.uid).child("lastName").value.toString()
+                    ItemId.child("WorkerName").setValue(Username)
+                    mProgressBar!!.dismiss()
+                    mUsersDatabaseReference!!.removeEventListener(this)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
             ProductCode?.setText("")
-            ProductName?.setText("")
-            ProductAmount?.setText("")
-            SalePrice?.setText("")
-            ProductCode?.setText("")
-            ProductName?.setText("")
-            ProductAmount?.setText("")
-            SalePrice?.setText("")
+            ProductName?.setText(null)
+            ProductAmount?.setText(null)
+            SalePrice?.setText(null)
+            DateChange?.setText("תאריך שינוי:")
+            WorkerName?.setText("שם העובד/ת:")
+
             Toast.makeText(
                 this, "פריט עודכן בהצלחה!",
                 Toast.LENGTH_SHORT
             ).show()
-            ProductCode?.setText("")
-            ProductName?.setText("")
-            ProductAmount?.setText("")
-            SalePrice?.setText("")
+
 
         } else {
             Toast.makeText(
@@ -171,7 +189,7 @@ class SearchActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         // Set a title for alert dialog
-        builder.setTitle("שינוי פריט")
+        builder.setTitle("שינוי פריט                                         ")
 
         // Set a message for alert dialog
         builder.setMessage("את/ה עומד/ת לשנות ערך של פריט, האם ברצונך להמשיך?")

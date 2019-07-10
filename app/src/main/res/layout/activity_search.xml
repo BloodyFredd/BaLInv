@@ -171,6 +171,16 @@
                         android:gravity="right"
                         android:singleLine="true"/>
 
+                <TextView
+                        android:id="@+id/WorkerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=":ת/שם העובד"
+                        android:textSize="20sp"
+                        android:gravity="right"
+                        android:layout_marginTop="15dp"
+                        android:singleLine="true"/>
+
             </android.support.design.widget.TextInputLayout>
 
             <Button

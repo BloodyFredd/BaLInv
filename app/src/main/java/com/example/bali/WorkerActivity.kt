@@ -12,8 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,11 +34,14 @@ class WorkerActivity : AppCompatActivity() {
     private var SalePrice: EditText? = null
     private var AddItem: Button? = null
     private var mDatabaseReference: DatabaseReference? = null
+    private var mUsersDatabaseReference: DatabaseReference? = null
+    private var mAuth: FirebaseAuth? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mProgressBar: ProgressDialog? = null
     private var AutoIncrement: Button? = null
     private var IncrementBtn: Button? = null
     private var DecrementBtn: Button? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +55,8 @@ class WorkerActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
+        mUsersDatabaseReference = mDatabase!!.reference.child("Users")
+        mAuth = FirebaseAuth.getInstance()
         ProductCode = findViewById<View>(R.id.BarCode) as EditText
         ProductName = findViewById<View>(R.id.ProductName) as EditText
         ProductAmount = findViewById<View>(R.id.Amount) as EditText
@@ -127,6 +132,17 @@ class WorkerActivity : AppCompatActivity() {
             ItemId.child("SalePrice").setValue(PPrice)
             ItemId.child("ChangeDate").setValue(format)
             ItemId.child("Percentages").setValue("0")
+            mUsersDatabaseReference!!.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var Username=""
+                    Username = snapshot.child(mAuth!!.currentUser!!.uid).child("firstName").value.toString() + " "
+                    Username += snapshot.child(mAuth!!.currentUser!!.uid).child("lastName").value.toString()
+                    ItemId.child("WorkerName").setValue(Username)
+                        mProgressBar!!.dismiss()
+                        mDatabaseReference!!.removeEventListener(this)
+                }
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
             ProductCode?.setText("")
             ProductName?.setText("")
             ProductAmount?.setText("")
