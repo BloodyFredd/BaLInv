@@ -7,8 +7,6 @@ import android.content.pm.PackageManager
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.app.LoaderManager.LoaderCallbacks
-import android.content.CursorLoader
-import android.content.Loader
 import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
@@ -18,11 +16,11 @@ import android.provider.ContactsContract
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.content.Intent
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.app.ProgressDialog
+import android.content.*
 import android.util.Log
 import android.widget.*
 import com.google.firebase.FirebaseApp
@@ -49,10 +47,13 @@ class LoginActivity : AppCompatActivity() {
     private var mProgressBar: ProgressDialog? = null
     //Firebase references
     private var mAuth: FirebaseAuth? = null
+    var Sp : SharedPreferences? = null
+    var UserSp : SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "התחברות                                                      "
+
         setContentView(R.layout.activity_login)
         // Set up the login form.
         //populateAutoComplete()
@@ -102,6 +103,20 @@ class LoginActivity : AppCompatActivity() {
         //    .setOnClickListener { startActivity(Intent(this@LoginActivity,
         //        CreateAccountActivity::class.java)) }
         btnLogin!!.setOnClickListener { loginUser() }
+        Sp = getSharedPreferences("login", Context.MODE_PRIVATE)
+        UserSp = getSharedPreferences("Mail", Context.MODE_PRIVATE)
+        if(Sp!!.getBoolean("logged",false))
+        {
+            if(UserSp!!.getBoolean("Manager",false))
+            {
+                ManagerupdateUI()
+            }
+            else
+                updateUI()
+            finish()
+        }
+
+
     }
 
     private fun loginUser() {
@@ -118,10 +133,16 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
                         //Log.d(TAG, "signInWithEmail:success")
-                        if(mail=="omriavidan0402hn@gmail.com")
+                        if(mail=="omriavidan0402hn@gmail.com") {
+                            Sp!!.edit().putBoolean("logged",true).apply()
+                            UserSp!!.edit().putBoolean("Manager",true).apply()
                             ManagerupdateUI()
-                        else
+                        }
+                        else {
+                            Sp!!.edit().putBoolean("logged", true).apply()
                             updateUI()
+                        }
+                        mProgressBar!!.dismiss()
                         finish()
                     } else {
                         // If sign in fails, display a message to the user.
@@ -142,6 +163,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun ManagerupdateUI() {
+
         val intent = Intent(this@LoginActivity, ManagerActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
