@@ -6,7 +6,9 @@
     <color name="colorLightGreen">#F6FDEF</color>
     <color name="colorButtonGreen">#01A795</color>
     <color name="colorTextGreen">#8DC9C9C9</color>
+
     <color name="colorBlack">#423F3F</color>
+
     <color name="colorButtonBlue">#52A4FF</color>
     <color name="colorBackgroundBlue">#E4ECFF</color>
     <color name="colorActionBarBlue">#0760BB</color>

@@ -77,7 +77,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/Search_Product"
-                    android:background="@drawable/button_round"
+                    android:background="@drawable/green_btn_pressed"
                     android:textSize="17dp"
                     android:layout_gravity="center"
                     android:textColor="#E9FFFFFF"
@@ -88,7 +88,7 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="230dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/button_round"
+                    android:background="@drawable/green_btn_pressed"
                     android:textSize="17dp"
                     android:layout_gravity="center"
                     android:textColor="#E9FFFFFF"
@@ -107,7 +107,7 @@
                     android:textSize="17dp"
                     android:textColor="#E9FFFFFF"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_round"
+                    android:background="@drawable/green_btn_pressed"
                     android:textStyle="bold"/>
 
             <Button
@@ -117,7 +117,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_round"
+                    android:background="@drawable/green_btn_pressed"
                     android:text="@string/Reports"
                     android:textSize="17dp"
                     android:textColor="#E9FFFFFF"
@@ -133,7 +133,7 @@
                     android:layout_gravity="center"
                     android:textSize="17dp"
                     android:textColor="#E9FFFFFF"
-                    android:background="@drawable/button_round"
+                    android:background="@drawable/green_btn_pressed"
                     android:textStyle="bold"/>
 
         </LinearLayout>

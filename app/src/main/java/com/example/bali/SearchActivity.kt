@@ -87,9 +87,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun SearchItem() {
         val PCode = ProductCode?.text.toString()
-        val PName = ProductName?.text.toString()
-        val PAmount = ProductAmount?.text.toString()
-        val PPrice = SalePrice?.text.toString()
+
 
         if (!TextUtils.isEmpty(PCode)) {
             mProgressBar!!.setMessage("טוען מוצרים...")

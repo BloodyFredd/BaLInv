@@ -135,7 +135,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/Add_Worker"
                         android:textSize="17dp"
-                        android:background="@drawable/button_blue_round"
+                        android:background="@drawable/blue_btn_pressed"
                         android:textColor="#E9FFFFFF"
                         android:textStyle="bold"/>
 
