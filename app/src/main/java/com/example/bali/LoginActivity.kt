@@ -32,14 +32,9 @@ import com.google.firebase.database.FirebaseDatabase
 
 import kotlinx.android.synthetic.main.activity_login.*
 
-/**
- * A login screen that offers login via email/password.
- */
+
 class LoginActivity : AppCompatActivity() {
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    //private var mAuthTask: UserLoginTask? = null
+
 
     private val TAG = "LoginActivity"
     //global variables
@@ -114,15 +109,15 @@ class LoginActivity : AppCompatActivity() {
         password = etPassword?.text.toString()
         val mail=email
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            mProgressBar!!.setMessage("Signing in...")
+            mProgressBar!!.setMessage("מבצע התחברות...")
             mProgressBar!!.show()
-            Log.d(TAG, "Logging in user.")
+            //Log.d(TAG, "Logging in user.")
             mAuth!!.signInWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
                     mProgressBar!!.hide()
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success")
+                        //Log.d(TAG, "signInWithEmail:success")
                         if(mail=="omriavidan0402hn@gmail.com")
                             ManagerupdateUI()
                         else
@@ -130,13 +125,13 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.e(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(this@LoginActivity, "Authentication failed.",
+                        //Log.e(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
                             Toast.LENGTH_SHORT).show()
                     }
                 }
         } else {
-            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "יש להכניס את כל השדות", Toast.LENGTH_SHORT).show()
         }
     }
 

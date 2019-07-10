@@ -143,7 +143,7 @@ class WorkingPercentageActivity : AppCompatActivity() {
             R.id.ChangeMenu ->{
                 val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
                 var ItemCode = Items[info.position]!!.substringAfterLast("\n")
-                Log.d("whattttttttttt?????????", ItemCode)
+                //Log.d("whattttttttttt?????????", ItemCode)
                 ChangeDialog(ItemCode)
 
                 return true

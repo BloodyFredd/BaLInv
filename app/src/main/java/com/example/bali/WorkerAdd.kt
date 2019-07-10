@@ -87,13 +87,13 @@ class WorkerAdd : AppCompatActivity() {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
 
-                        Toast.makeText(this@WorkerAdd, "Authentication failed.",
+                        Toast.makeText(this@WorkerAdd, "האימות שגוי",
                             Toast.LENGTH_SHORT).show()
                     }
                 }
 
         } else {
-            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "יש להכניס את כל הנתונים", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -110,12 +110,12 @@ class WorkerAdd : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this@WorkerAdd,
-                        "Verification email sent to " + mUser.getEmail(),
+                        "נשלח מייל אימות ל-" + mUser.getEmail(),
                         Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e(TAG, "sendEmailVerification", task.exception)
                     Toast.makeText(this@WorkerAdd,
-                        "Failed to send verification email.",
+                        "לא ניתן לשלוח מייל אימות",
                         Toast.LENGTH_SHORT).show()
                 }
             }

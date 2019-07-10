@@ -40,17 +40,17 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 .sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val message = "Email sent."
+                        val message = "נשלח מייל"
                         Log.d(TAG, message)
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                         updateUI()
                     } else {
                         Log.w(TAG, task.exception!!.message)
-                        Toast.makeText(this, "No user found with this email.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "לא נמצא משתמש עם מייל כזה", Toast.LENGTH_SHORT).show()
                     }
                 }
         } else {
-            Toast.makeText(this, "Enter Email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "הכנס מייל", Toast.LENGTH_SHORT).show()
         }
     }
     private fun updateUI() {
