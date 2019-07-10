@@ -1,11 +1,13 @@
 package com.example.bali
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -14,11 +16,7 @@ import com.google.firebase.database.*
 import android.widget.AdapterView
 import android.widget.AdapterView.AdapterContextMenuInfo
 import com.google.firebase.auth.FirebaseUser
-
-
-
-
-
+import kotlinx.android.synthetic.main.change_dialog.view.*
 
 
 class ManageWorkerActivity : AppCompatActivity() {
@@ -28,12 +26,10 @@ class ManageWorkerActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     //UI elements
     private var lvName: ListView? = null
-    private var tvLastName: TextView? = null
     private var tvEmail: TextView? = null
     private var tvEmailVerifiied: TextView? = null
     private var mProgressBar: ProgressDialog? = null
     private val Workers =  ArrayList<String?>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +48,6 @@ class ManageWorkerActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         lvName = findViewById<View>(R.id.WorkersList) as ListView
         mProgressBar = ProgressDialog(this)
-        //tvLastName = findViewById<View>(R.id.tv_last_name) as TextView
        // tvEmail = findViewById<View>(R.id.tv_email) as TextView
         //tvEmailVerifiied = findViewById<View>(R.id.tv_email_verifiied) as TextView
     }
@@ -103,18 +98,53 @@ override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: Context
         })
     }
 
+    fun ConfirmationDialog(UserCode: String): Int {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.confirmation_deleteworker, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+
+        val  mAlertDialog = mBuilder.show()
+        var ConfTextView: TextView = mAlertDialog.findViewById<View>(R.id.Confirmation) as TextView
+        ConfTextView!!.setText("האם אתה בטוח שברצונך למחוק עובד זה?")
+
+        //login button click of custom layout
+        mDialogView.dialogYesBtn.setOnClickListener {
+            //dismiss dialog
+            mAlertDialog.dismiss()
+            DeleteWorker(UserCode)
+            //get text from EditTexts of custom layout
+
+
+        }
+        //cancel button click of custom layout
+        mDialogView.dialogCancelBtn.setOnClickListener {
+            //dismiss dialog
+            mAlertDialog.dismiss()
+
+
+        }
+        return 1
+    }
+
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
             R.id.Remove ->{
                 val info = item.menuInfo as AdapterContextMenuInfo
                 //Log.d("whattttttttttt?????????", map.get(Workers[info.position]))
                 var UserC = map.get(Workers[info.position]).toString()
-                Toast.makeText(applicationContext, "מוחק...", Toast.LENGTH_LONG).show()
-                val currentUserDb = mDatabaseReference!!.child(UserC)
-                currentUserDb.child("flag").setValue("0")
+                ConfirmationDialog(UserC)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun DeleteWorker(UserCode : String)
+    {
+        Toast.makeText(applicationContext, "מוחק...", Toast.LENGTH_LONG).show()
+        val currentUserDb = mDatabaseReference!!.child(UserCode)
+        currentUserDb.child("flag").setValue("0")
     }
 }

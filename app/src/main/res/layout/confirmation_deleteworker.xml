@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+
+    <TextView
+            android:id="@+id/Confirmation"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
+
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+        <Button
+                android:id="@+id/dialogCancelBtn"
+                android:text="ביטול"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="70dp"
+                android:layout_gravity="left"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/blue_btn_pressed"
+                android:layout_height="40dp" />
+        <Button
+                android:id="@+id/dialogYesBtn"
+                android:text="אישור"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="70dp"
+                android:layout_gravity="right"
+                android:background="@drawable/blue_btn_pressed"
+                android:layout_height="40dp" />
+    </LinearLayout>
+
+</LinearLayout>

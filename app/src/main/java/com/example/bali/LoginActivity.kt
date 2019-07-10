@@ -25,8 +25,7 @@ import android.util.Log
 import android.widget.*
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -49,12 +48,16 @@ class LoginActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     var Sp : SharedPreferences? = null
     var UserSp : SharedPreferences? = null
+    private var mDatabase: FirebaseDatabase? = null
+    private var mDatabaseReference: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "התחברות                                                      "
 
         setContentView(R.layout.activity_login)
+        mDatabase = FirebaseDatabase.getInstance()
+        mDatabaseReference = mDatabase!!.reference.child("Users")
         // Set up the login form.
         //populateAutoComplete()
 
@@ -133,17 +136,32 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
                         //Log.d(TAG, "signInWithEmail:success")
-                        if(mail=="omriavidan0402hn@gmail.com") {
-                            Sp!!.edit().putBoolean("logged",true).apply()
-                            UserSp!!.edit().putBoolean("Manager",true).apply()
-                            ManagerupdateUI()
-                        }
-                        else {
-                            Sp!!.edit().putBoolean("logged", true).apply()
-                            updateUI()
-                        }
-                        mProgressBar!!.dismiss()
-                        finish()
+
+
+                        mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                var userflag = snapshot.child(mAuth!!.currentUser!!.uid).child("flag").value.toString()
+                                if(userflag == "1") {
+                                    if (mail == "omriavidan0402hn@gmail.com") {
+                                        Sp!!.edit().putBoolean("logged", true).apply()
+                                        UserSp!!.edit().putBoolean("Manager", true).apply()
+                                        ManagerupdateUI()
+                                    } else {
+                                        Sp!!.edit().putBoolean("logged", true).apply()
+                                        updateUI()
+                                    }
+                                    mProgressBar!!.dismiss()
+                                    mDatabaseReference!!.removeEventListener(this)
+                                    finish()
+                                }
+                                else
+                                    Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
+                                        Toast.LENGTH_SHORT).show()
+
+                            }
+                            override fun onCancelled(databaseError: DatabaseError) {}
+                        })
+
                     } else {
                         // If sign in fails, display a message to the user.
                         //Log.e(TAG, "signInWithEmail:failure", task.exception)
