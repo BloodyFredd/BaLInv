@@ -75,7 +75,7 @@
                     android:layout_gravity="center"
                     android:text="@string/Search_Product"                        android:background="@drawable/blue_btn_pressed"
                     android:textColor="#E9FFFFFF"
-
+                    android:textSize="17sp"
                     android:textStyle="bold"/>
 
             <Button
@@ -86,6 +86,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:text="@string/Add_Product"
+                    android:textSize="17sp"
                     android:background="@drawable/blue_btn_pressed"
                     android:textColor="#E9FFFFFF"
                     android:textStyle="bold"/>

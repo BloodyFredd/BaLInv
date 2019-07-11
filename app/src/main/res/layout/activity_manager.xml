@@ -105,7 +105,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:text="נהל עובדים"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textColor="#E9FFFFFF"
                     android:layout_gravity="center"
                     android:background="@drawable/green_btn_pressed"

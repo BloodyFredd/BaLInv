@@ -78,9 +78,10 @@ class InventoryCounts : AppCompatActivity() {
         })
     }
 
-    override fun onContextItemSelected(item: MenuItem?): Boolean {
+    /*override fun onContextItemSelected(item: MenuItem?): Boolean {
         return when (item!!.itemId) {
-            R.id.Remove ->{
+            R.id.RemoveInventoryCount ->{
+
                 val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
                 //Log.d("whattttttttttt?????????", map.get(Workers[info.position]))
                 var UserC = map.get(InventoryArray[info.position]).toString()
@@ -91,5 +92,5 @@ class InventoryCounts : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
+    }*/
 }

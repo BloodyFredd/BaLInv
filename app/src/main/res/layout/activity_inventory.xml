@@ -67,6 +67,7 @@
                 android:textColor="#E9FFFFFF"
                 android:layout_gravity="center"
                 android:text="@string/InvenCounts"
+                android:textSize="17sp"
                 android:textStyle="bold"/>
 
         <Button
@@ -78,6 +79,7 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/pink_btn_pressed"
                 android:text="@string/DeleteInv"
+                android:textSize="17sp"
                 android:textColor="#E9FFFFFF"
                 android:textStyle="bold" />
         <Button
@@ -88,6 +90,7 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/pink_btn_pressed"
                 android:textColor="#E9FFFFFF"
+                android:textSize="17sp"
                 android:layout_gravity="center"
                 android:text="@string/PercentagesAdd"
                 android:textStyle="bold"/>
@@ -101,6 +104,7 @@
             android:background="@drawable/pink_btn_pressed"
             android:textColor="#E9FFFFFF"
             android:layout_gravity="center"
+            android:textSize="17sp"
             android:text="@string/FinishCount"
             android:textStyle="bold"/>
     </LinearLayout>

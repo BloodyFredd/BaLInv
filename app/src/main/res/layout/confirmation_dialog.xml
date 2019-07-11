@@ -27,6 +27,7 @@
                 android:layout_width="70dp"
                 android:layout_gravity="left"
                 android:layout_marginRight="30dp"
+                android:textSize="17sp"
                 android:background="@drawable/green_btn_pressed"
                 android:layout_height="40dp" />
         <Button
@@ -34,6 +35,7 @@
                 android:text="אישור"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:layout_width="70dp"
+                android:textSize="17sp"
                 android:layout_gravity="right"
                 android:background="@drawable/green_btn_pressed"
                 android:layout_height="40dp" />

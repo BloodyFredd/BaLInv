@@ -87,7 +87,7 @@ class WorkingPercentageActivity : AppCompatActivity() {
                     }
                     else
                     {
-                        if(Ks.child("Percentages").value as? String =="0")
+                        if(Ks.child("Percentages").value as? String =="0" && Amount != "0")
                         {
                             var BarCode = Ks.key.toString()
                             var name = Ks.child("ProductName").value as? String
@@ -145,6 +145,15 @@ class WorkingPercentageActivity : AppCompatActivity() {
                 var ItemCode = Items[info.position]!!.substringAfterLast("\n")
                 //Log.d("whattttttttttt?????????", ItemCode)
                 ChangeDialog(ItemCode)
+
+                return true
+            }
+            R.id.EditDetailsProduct ->{
+                val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
+                var ItemCode = Items[info.position]!!.substringAfterLast("\n")
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("ItemCode", ItemCode)
+                startActivity(intent)
 
                 return true
             }

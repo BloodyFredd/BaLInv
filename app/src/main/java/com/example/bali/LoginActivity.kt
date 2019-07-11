@@ -1,10 +1,16 @@
 package com.example.bali
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
-import android.content.pm.PackageManager
-import android.support.design.widget.Snackbar
+import android.app.KeyguardManager
+import android.content.Context
+import android.hardware.fingerprint.FingerprintManager
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.widget.Button
+import android.widget.TextView
+import java.security.KeyStore
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 import android.support.v7.app.AppCompatActivity
 import android.app.LoaderManager.LoaderCallbacks
 import android.database.Cursor
@@ -27,11 +33,18 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity() {
 
+
+    private val KEY_NAME:String="mykey"
+    private var keyStore: KeyStore? = null
+    private var keyGenerator: KeyGenerator? = null
+    private val textView: TextView? = null
+    private var cryptoObject: FingerprintManager.CryptoObject? = null
+    private var fingerprintManager: FingerprintManager? = null
+    var message: TextView?=null
 
     private val TAG = "LoginActivity"
     //global variables
@@ -86,8 +99,28 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        initialise()
+        message = findViewById<TextView>(R.id.message)
+        val btn = findViewById<Button>(R.id.scan)
+        val fph = FingerprintHandler(message!!)
+        if (!checkFinger()) {
+            Log.d(TAG,"checkFinger return"+!checkFinger())
+            btn.isEnabled = false
+        } else {
+            // We are ready to set up the cipher and the key
+            Log.d(TAG,"checkFinger return else"+!checkFinger())
+            generateKey()
+            val cipher = generateCipher()
+            cryptoObject = FingerprintManager.CryptoObject(cipher)
+            message?.text=getString(R.string.instructions)
 
+        }
+        btn.setOnClickListener{
+            message!!.text="סרוק את האצבע כעת"
+            fph.doAuth(this.fingerprintManager!!, this!!.cryptoObject!!)
+
+        }
+
+        initialise()
 
     }
 
@@ -118,7 +151,6 @@ class LoginActivity : AppCompatActivity() {
                 updateUI()
             finish()
         }
-
 
     }
 
@@ -185,6 +217,63 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this@LoginActivity, ManagerActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+    }
+
+    private fun checkFinger(): Boolean {
+        // Keyguard Manager
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        // Fingerprint Manager
+        fingerprintManager = getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager
+        try {
+            // Check if the fingerprint sensor is present
+            if (!fingerprintManager!!.isHardwareDetected) {
+                // Update the UI with a message
+                message?.text = getString(R.string.fingerprint_not_supported)
+                return false
+            }
+            if (!fingerprintManager!!.hasEnrolledFingerprints()) {
+                message?.text = getString(R.string.no_fingerprint_configured)
+                return false
+            }
+            if (!keyguardManager.isKeyguardSecure) {
+                message?.text = getString(R.string.secure_lock_not_enabled)
+                return false
+            }
+        } catch (se: SecurityException) {
+            se.printStackTrace()
+        }
+
+        return true
+    }
+
+
+    private fun generateKey() {
+
+        // Get the reference to the key store
+        keyStore = KeyStore.getInstance("AndroidKeyStore")
+        // Key generator to generate the key
+        keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,
+            "AndroidKeyStore")
+        keyStore?.load(null)
+        keyGenerator?.init(KeyGenParameterSpec.Builder(KEY_NAME, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+            .setUserAuthenticationRequired(true)
+            .setEncryptionPaddings(
+                KeyProperties.ENCRYPTION_PADDING_PKCS7)
+            .build())
+        keyGenerator?.generateKey()
+
+    }
+
+    private fun generateCipher(): Cipher {
+
+        val cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
+                + KeyProperties.BLOCK_MODE_CBC + "/"
+                + KeyProperties.ENCRYPTION_PADDING_PKCS7)
+        val key = keyStore?.getKey(KEY_NAME,
+            null) as SecretKey
+        cipher.init(Cipher.ENCRYPT_MODE, key)
+        return cipher
     }
 
 

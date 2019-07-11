@@ -175,7 +175,7 @@
                         android:id="@+id/WorkerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint=":ת/שם העובד"
+                        android:hint="שם העובד/ת:"
                         android:textSize="20sp"
                         android:gravity="right"
                         android:layout_marginTop="15dp"
@@ -193,6 +193,7 @@
                     android:textColor="#E9FFFFFF"
                     android:layout_gravity="center"
                     android:text="@string/Search_Product"
+                    android:textSize="17sp"
                     android:textStyle="bold"/>
 
             <Button
@@ -204,6 +205,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/pink_btn_pressed"
                     android:textColor="#E9FFFFFF"
+                    android:textSize="17sp"
                     android:text="@string/Change_Product"
                     android:textStyle="bold"/>/>
 

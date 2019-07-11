@@ -5,4 +5,8 @@
             android:id="@+id/ChangeMenu"
             android:title="שנה אחוז עבודה"
             />
+    <item
+            android:id="@+id/EditDetailsProduct"
+            android:title="עבור לעריכת פריט"
+            />
 </menu>

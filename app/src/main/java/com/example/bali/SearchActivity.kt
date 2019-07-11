@@ -2,6 +2,7 @@ package com.example.bali
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.ClipData
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -58,9 +59,16 @@ class SearchActivity : AppCompatActivity() {
         WorkerName = findViewById<View>(R.id.WorkerName) as TextView
         mProgressBar = ProgressDialog(this)
 
-
+        var ItemExternalCode: String = ""
+        var MyIntent : Intent = intent
+        if(MyIntent.extras!=null)
+            ItemExternalCode = intent!!.getStringExtra("ItemCode")
+        if(ItemExternalCode!= "")
+        {
+            SearchItem(ItemExternalCode)
+        }
         SearchItem!!.setOnClickListener {
-            SearchItem()
+            SearchItem("")
         }
 
         EditItem!!.setOnClickListener {
@@ -93,10 +101,12 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun SearchItem() {
-        val PCode = ProductCode?.text.toString()
-
-
+    private fun SearchItem(ItemCode : String) {
+        var PCode = ProductCode?.text.toString()
+        if(ItemCode != "") {
+            PCode = ItemCode
+            ProductCode?.setText(ItemCode)
+        }
         if (!TextUtils.isEmpty(PCode)) {
             mProgressBar!!.setMessage("טוען מוצרים...")
             mProgressBar!!.show()

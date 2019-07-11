@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/RemoveWorker"
+            android:title="הסר עובד"
+            />
+
+
+    <item
+            android:id="@+id/EditWorker"
+            android:title="שנה פרטי עובד"
+            />
+</menu>
