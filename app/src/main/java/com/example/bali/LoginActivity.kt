@@ -99,6 +99,19 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        initialise()
+
+    }
+
+    private fun initialise() {
+        tvForgotPassword = findViewById<View>(R.id.ForgotPass) as TextView
+        etEmail = findViewById<View>(R.id.email) as EditText
+        etPassword = findViewById<View>(R.id.password) as EditText
+        btnLogin = findViewById<View>(R.id.sign_in) as Button
+        //btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
+        mProgressBar = ProgressDialog(this)
+        mAuth = FirebaseAuth.getInstance()
+
         message = findViewById<TextView>(R.id.message)
         val btn = findViewById<Button>(R.id.scan)
         val fph = FingerprintHandler(message!!)
@@ -120,18 +133,6 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        initialise()
-
-    }
-
-    private fun initialise() {
-        tvForgotPassword = findViewById<View>(R.id.ForgotPass) as TextView
-        etEmail = findViewById<View>(R.id.email) as EditText
-        etPassword = findViewById<View>(R.id.password) as EditText
-        btnLogin = findViewById<View>(R.id.sign_in) as Button
-        //btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
-        mProgressBar = ProgressDialog(this)
-        mAuth = FirebaseAuth.getInstance()
         tvForgotPassword!!
             .setOnClickListener { startActivity(Intent(this@LoginActivity,
                 ForgotPasswordActivity::class.java)) }
