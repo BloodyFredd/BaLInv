@@ -4,8 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
+import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -19,11 +24,18 @@ import kotlinx.android.synthetic.main.activity_manager.*
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.activity_search.main_toolbar
 import kotlinx.android.synthetic.main.change_dialog.view.*
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVPrinter
+import java.io.*
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.*
 
 class ManagerActivity : AppCompatActivity() {
 
     //private var toolbar: android.support.v7.widget.Toolbar? = null
-
+    private val CSV_HEADER = "קוד מוצר,שם מוצר,כמות/משקל,מחיר מכירה,תאריך שינוי,עובד/ת"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "תפריט מנהל                                                     "
@@ -35,13 +47,14 @@ class ManagerActivity : AppCompatActivity() {
         val actionbar = supportActionBar
         actionbar!!.title = ""
         toolbar.overflowIcon = getDrawable(R.drawable.ic_more_vert_white_24dp)
-
+        File(this.filesDir,"customer.csv")
         val SearchbtnOpenActivity: Button = findViewById(R.id.search_product)
         SearchbtnOpenActivity.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
-
+        ///writeCsv()
+        //sendCsv()
         val AddingbtnOpenActivity: Button = findViewById(R.id.add_product_button)
         AddingbtnOpenActivity.setOnClickListener {
             val intent = Intent(this, WorkerActivity::class.java)
@@ -134,6 +147,64 @@ class ManagerActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
+
+    /*fun writeCsv()
+    {
+        val customers = Arrays.asList(
+            item("1", "Jack mith", "Massachusetts", 23)
+         )
+
+        var fileWriter: Writer? = null
+
+        try {
+            Log.d("Nooooooooooo",this.filesDir.toString())
+            fileWriter =OutputStreamWriter(FileOutputStream(File(this.filesDir,"customer.csv")),StandardCharsets.UTF_8)
+
+            fileWriter.append(CSV_HEADER)
+            fileWriter.append('\n')
+
+            for (customer in customers) {
+                fileWriter.append(customer.id)
+                fileWriter.append(',')
+                fileWriter.append(customer.name)
+                fileWriter.append(',')
+                fileWriter.append(customer.address)
+                fileWriter.append(',')
+                fileWriter.append(customer.age.toString())
+                fileWriter.append('\n')
+            }
+
+            Log.d("Yeeeesssssssssss","Write CSV successfully!")
+
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+        } finally {
+            if (fileWriter != null) try { fileWriter.close(); } catch (e: IOException ) {}
+        }
+
+    }*/
+    /*fun sendCsv()
+    {
+        val filename="customer.csv"
+        val filelocation =  File(this.filesDir.absolutePath, filename)
+        val path = FileProvider.getUriForFile(this, "com.example.bali.provider",filelocation)
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        // set the type to 'email'
+        emailIntent .setType("vnd.android.cursor.dir/email")
+        val to = arrayOf("omriavidan0402hn@gmail.com")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
+        // the attachment
+        emailIntent .putExtra(Intent.EXTRA_STREAM, path)
+        // the mail subject
+        emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Subject")
+        startActivity(Intent.createChooser(emailIntent , "Send email..."))
+        Log.d("EmailSent","Write CSV successfully!")
+
+    }*/
+
+
 
 
 }
