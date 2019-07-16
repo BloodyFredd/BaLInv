@@ -59,7 +59,7 @@ class ManageWorkerActivity : AppCompatActivity() {
 override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater = menuInflater
-        inflater.inflate(R.menu.remove_menu, menu)
+        inflater.inflate(R.menu.edit_worker, menu)
     }
 
     override fun onStart() {
