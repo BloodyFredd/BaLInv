@@ -37,15 +37,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="button">Button</string>
-    <string name="title_activity_manage_worker">ManageWorkerActivity</string>
-    <string name="instructions">לכניסה באמצעות טביעת אצבע</string>
-    <string name="auth_success">הצלחת להתחבר!</string>
-    <string name="aut_fail">הסריקה לא התבצעה כמו שצריך</string>
-    <string name="btn_auth">לכניסה באמצעות טביעת אצבע</string>
-    <string name="fingerprint_not_supported">בעיה בסריקה</string>
-    <string name="no_fingerprint_configured">טביעת האצבע אינה במערכת</string>
-    <string name="secure_lock_not_enabled">סרוק</string>
-
 
 </resources>

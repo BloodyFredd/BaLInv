@@ -137,42 +137,6 @@
                     android:textColor="#E9FFFFFF"
                     android:textStyle="bold"/>
 
-            <Button
-                    android:id="@+id/scan"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/green_btn_pressed"
-                    android:textSize="17dp"
-                    android:layout_gravity="center"
-                    android:textColor="#E9FFFFFF"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textStyle="bold"
-                    android:text="@string/btn_auth" />
-
-            <TextView
-                    android:id="@+id/message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="18sp"
-                    android:layout_gravity="center" />
-
-            <!--     <ImageView
-                         android:id="@+id/imageView"
-                         android:layout_width="80dp"
-                         android:layout_height="80dp"
-                         android:layout_gravity="center"
-                         app:srcCompat="@drawable/ic_action_auth"
-      />  -->
-
-
                  <android.support.design.widget.TextInputLayout
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content">
@@ -182,7 +146,7 @@
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
                              android:hint="@string/ForgotPass"
-                             android:textSize="20sp"
+                             android:textSize="18sp"
                              android:gravity="center"
 
                              android:singleLine="true"/>
