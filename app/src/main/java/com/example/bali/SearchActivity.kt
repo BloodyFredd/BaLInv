@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,7 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_worker.*
+import kotlinx.android.synthetic.main.change_dialog.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -101,6 +103,33 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+
+    fun ChangeDialog(PCode: String)
+    {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.confirmation_deleteworker, null)
+        //AlertDialogBuilder
+        val mBuilder = android.app.AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        val  mAlertDialog = mBuilder.show()
+        var ConfTextView: TextView = mAlertDialog.findViewById<View>(R.id.Confirmation) as TextView
+        ConfTextView!!.setText("הפריט לא קיים,האם תרצה לעבור לחלון הוספת פריט?")
+        //login button click of custom layout
+        mDialogView.dialogYesBtn.setOnClickListener {
+            //dismiss dialog
+            mAlertDialog.dismiss()
+            //get text from EditTexts of custom layout
+            val intent = Intent(this@SearchActivity, WorkerActivity::class.java)
+            intent.putExtra("ItemCode", PCode)
+            startActivity(intent)
+        }
+        //cancel button click of custom layout
+        mDialogView.dialogCancelBtn.setOnClickListener {
+            //dismiss dialog
+            mAlertDialog.dismiss()
+        }
+    }
+
     private fun SearchItem(ItemCode : String) {
         var PCode = ProductCode?.text.toString()
         if(ItemCode != "") {
@@ -112,14 +141,24 @@ class SearchActivity : AppCompatActivity() {
             mProgressBar!!.show()
             mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+
                     val ItemId = snapshot.child(PCode)
-                    ProductName?.setText(ItemId.child("ProductName").value.toString())
-                    ProductAmount?.setText(ItemId.child("ProductAmount").value.toString())
-                    SalePrice?.setText(ItemId.child("SalePrice").value.toString())
-                    DateChange?.setText("תאריך שינוי:  " + ItemId.child("ChangeDate").value.toString())
-                    WorkerName?.setText("שם העובד/ת:  " + ItemId.child("WorkerName").value.toString() )
-                    mProgressBar!!.dismiss()
-                    mDatabaseReference!!.removeEventListener(this)
+                    if(ItemId.exists()){
+                        ProductName?.setText(ItemId.child("ProductName").value.toString())
+                        ProductAmount?.setText(ItemId.child("ProductAmount").value.toString())
+                        SalePrice?.setText(ItemId.child("SalePrice").value.toString())
+                        DateChange?.setText("תאריך שינוי:  " + ItemId.child("ChangeDate").value.toString())
+                        WorkerName?.setText("שם העובד/ת:  " + ItemId.child("WorkerName").value.toString())
+                        mProgressBar!!.dismiss()
+                        mDatabaseReference!!.removeEventListener(this)
+                    }
+                    else
+                    {
+                        mDatabaseReference!!.removeEventListener(this)
+                        mProgressBar!!.dismiss()
+                        Toast.makeText(this@SearchActivity,"הפריט לא קיים!" , Toast.LENGTH_SHORT).show()
+                        ChangeDialog(PCode)
+                    }
                 }
 
 
@@ -127,10 +166,8 @@ class SearchActivity : AppCompatActivity() {
             })
 
         } else {
-            Toast.makeText(
-                this, "אנא וודא/י שכל השדות הוזנו!",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "אנא וודא/י שכל השדות הוזנו!", Toast.LENGTH_SHORT).show()
+
         }
 
 

@@ -66,9 +66,22 @@ class WorkerActivity : AppCompatActivity() {
         IncrementBtn = findViewById<View>(R.id.Increment) as Button
         DecrementBtn = findViewById<View>(R.id.decrement) as Button
         mProgressBar = ProgressDialog(this)
+
+
+        var ItemExternalCode: String = ""
+        var MyIntent : Intent = intent
+        if(MyIntent.extras!=null)
+            ItemExternalCode = intent!!.getStringExtra("ItemCode")
+        if(ItemExternalCode!= "")
+        {
+            ProductCode?.setText(ItemExternalCode)
+        }
+
+
         AddItem!!.setOnClickListener{
             AddItemF()
         }
+
 
         AutoIncrement!!.setOnClickListener{
             IncrementVal()
@@ -126,29 +139,51 @@ class WorkerActivity : AppCompatActivity() {
         && !TextUtils.isEmpty(PAmount) && !TextUtils.isEmpty(PPrice)) {
 
             val currentUserDb = mDatabaseReference
-            val ItemId=currentUserDb!!.child(PCode)
-            ItemId.child("ProductName").setValue(PName)
-            ItemId.child("ProductAmount").setValue(PAmount)
-            ItemId.child("SalePrice").setValue(PPrice)
-            ItemId.child("ChangeDate").setValue(format)
-            ItemId.child("Percentages").setValue("0")
-            mUsersDatabaseReference!!.addValueEventListener(object : ValueEventListener {
+            mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    var Username=""
-                    Username = snapshot.child(mAuth!!.currentUser!!.uid).child("firstName").value.toString() + " "
-                    Username += snapshot.child(mAuth!!.currentUser!!.uid).child("lastName").value.toString()
-                    ItemId.child("WorkerName").setValue(Username)
-                        mProgressBar!!.dismiss()
+
+                    val ItemId = snapshot.child(PCode)
+                    if(ItemId.exists()){
                         mDatabaseReference!!.removeEventListener(this)
+                        mProgressBar!!.dismiss()
+                        Toast.makeText(this@WorkerActivity,"הפריט כבר קיים!" , Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@WorkerActivity, SearchActivity::class.java)
+                        intent.putExtra("ItemCode", PCode)
+                        startActivity(intent)
+                    }
+                    else
+                    {
+                        val ItemId=currentUserDb!!.child(PCode)
+                        ItemId.child("ProductName").setValue(PName)
+                        ItemId.child("ProductAmount").setValue(PAmount)
+                        ItemId.child("SalePrice").setValue(PPrice)
+                        ItemId.child("ChangeDate").setValue(format)
+                        ItemId.child("Percentages").setValue("0")
+                        mUsersDatabaseReference!!.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                var Username=""
+                                Username = snapshot.child(mAuth!!.currentUser!!.uid).child("firstName").value.toString() + " "
+                                Username += snapshot.child(mAuth!!.currentUser!!.uid).child("lastName").value.toString()
+                                ItemId.child("WorkerName").setValue(Username)
+                                mProgressBar!!.dismiss()
+                                mDatabaseReference!!.removeEventListener(this)
+                            }
+                            override fun onCancelled(databaseError: DatabaseError) {}
+                        })
+                        ProductCode?.setText("")
+                        ProductName?.setText("")
+                        ProductAmount?.setText("")
+                        SalePrice?.setText("")
+                        Toast.makeText(this@WorkerActivity, "פריט נוסף בהצלחה!",
+                            Toast.LENGTH_SHORT).show()
+                        mDatabaseReference!!.removeEventListener(this)
+
+                    }
                 }
+
                 override fun onCancelled(databaseError: DatabaseError) {}
+
             })
-            ProductCode?.setText("")
-            ProductName?.setText("")
-            ProductAmount?.setText("")
-            SalePrice?.setText("")
-            Toast.makeText(this, "פריט נוסף בהצלחה!",
-                Toast.LENGTH_SHORT).show()
         }
         else {
             Toast.makeText(
