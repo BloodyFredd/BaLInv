@@ -2,7 +2,6 @@ package com.example.bali
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.ClipData
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -15,7 +14,6 @@ import android.view.View
 import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_worker.*
 import kotlinx.android.synthetic.main.change_dialog.view.*

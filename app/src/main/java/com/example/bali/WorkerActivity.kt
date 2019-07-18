@@ -10,17 +10,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.integration.android.IntentIntegrator
-//import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_worker.*
-import org.w3c.dom.Document
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,7 +46,6 @@ class WorkerActivity : AppCompatActivity() {
         supportActionBar?.title = "הוספת פריט                                                     "
         setTheme(R.style.BlueAppTheme)
         setContentView(R.layout.activity_worker)
-        //val Scanner : Button = findViewById(R.id.sign_in)
         db = FirebaseFirestore.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")

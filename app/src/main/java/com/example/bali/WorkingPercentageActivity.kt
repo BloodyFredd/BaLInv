@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -14,22 +13,17 @@ import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.change_dialog.view.*
-import java.sql.Struct
 
 class WorkingPercentageActivity : AppCompatActivity() {
 
-    var map = mutableMapOf<String, String>()
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mAuth: FirebaseAuth? = null
     //UI elements
     private var lvName: ListView? = null
-    private var tvLastName: TextView? = null
-    private var tvEmail: TextView? = null
-    private var tvEmailVerifiied: TextView? = null
     private var mProgressBar: ProgressDialog? = null
-    private val Items =  ArrayList<String?>()
-    private var NShown: CheckBox? = null
+    private val items =  ArrayList<String?>()
+    private var nShown: CheckBox? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +39,11 @@ class WorkingPercentageActivity : AppCompatActivity() {
         mProgressBar = ProgressDialog(this)
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
-        NShown = findViewById<View>(R.id.CheckB) as CheckBox
-        NShown!!.setOnClickListener{
-            LoadItems()
+        nShown = findViewById<View>(R.id.CheckB) as CheckBox
+        nShown!!.setOnClickListener{
+            loadItems()
         }
-        //tvLastName = findViewById<View>(R.id.tv_last_name) as TextView
-        // tvEmail = findViewById<View>(R.id.tv_email) as TextView
-        //tvEmailVerifiied = findViewById<View>(R.id.tv_email_verifiied) as TextView
+
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -62,43 +54,43 @@ class WorkingPercentageActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        LoadItems()
+        loadItems()
     }
 
-    fun LoadItems(){
+    fun loadItems(){
         mProgressBar!!.setMessage("טוען פריטים...")
         mProgressBar!!.show()
         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Items.clear()
+                items.clear()
                 val childes=snapshot.children
                 for(Ks in childes) {
-                    val Amount: String? = Ks.child("ProductAmount").value as? String
-                    if(NShown!!.isChecked == false){
-                        if(Amount != "0") {
+                    val amount: String? = Ks.child("ProductAmount").value as? String
+                    if(!nShown!!.isChecked){
+                        if(amount != "0") {
 
-                            var BarCode = Ks.key.toString()
+                            var barCode = Ks.key.toString()
                             var name = Ks.child("ProductName").value as? String
                             name += "\nאחוז עבודה: " //+ (Ks.child("Percentages").value as? String)
                             name += Ks.child("Percentages").value as? String
-                            name += "\n" + BarCode
-                            Items += name
+                            name += "\n" + barCode
+                            items += name
                         }
                     }
                     else
                     {
-                        if(Ks.child("Percentages").value as? String =="0" && Amount != "0")
+                        if(Ks.child("Percentages").value as? String =="0" && amount != "0")
                         {
-                            var BarCode = Ks.key.toString()
+                            var barCode = Ks.key.toString()
                             var name = Ks.child("ProductName").value as? String
                             name += "\nאחוז עבודה: " //+ (Ks.child("Percentages").value as? String)
                             name += Ks.child("Percentages").value as? String
-                            name += "\n" + BarCode
-                            Items += name
+                            name += "\n" + barCode
+                            items += name
                         }
                     }
                 }
-                lvName!!.adapter = ArrayAdapter<String>(this@WorkingPercentageActivity, android.R.layout.simple_list_item_1, Items) as ListAdapter?
+                lvName!!.adapter = ArrayAdapter<String>(this@WorkingPercentageActivity, android.R.layout.simple_list_item_1, items) as ListAdapter?
                 mProgressBar!!.dismiss()
 
                 registerForContextMenu(lvName)
@@ -108,7 +100,7 @@ class WorkingPercentageActivity : AppCompatActivity() {
         })
     }
 
-    fun ChangeDialog(PCode: String)
+    fun changeDialog(PCode: String)
     {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.change_dialog, null)
         //AlertDialogBuilder
@@ -122,12 +114,12 @@ class WorkingPercentageActivity : AppCompatActivity() {
             mAlertDialog.dismiss()
             //get text from EditTexts of custom layout
 
-            val Percentage = mDialogView.Percentage.text.toString()
+            val percentage = mDialogView.Percentage.text.toString()
             //set the input text in TextView
 
             mDatabase = FirebaseDatabase.getInstance()
             mDatabaseReference = mDatabase!!.reference.child("Items")
-            mDatabaseReference!!.child(PCode).child("Percentages").setValue(Percentage)
+            mDatabaseReference!!.child(PCode).child("Percentages").setValue(percentage)
             Toast.makeText(applicationContext, "מעדכן...", Toast.LENGTH_LONG).show()
         }
         //cancel button click of custom layout
@@ -142,17 +134,16 @@ class WorkingPercentageActivity : AppCompatActivity() {
         return when (item!!.itemId) {
             R.id.ChangeMenu ->{
                 val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-                var ItemCode = Items[info.position]!!.substringAfterLast("\n")
-                //Log.d("whattttttttttt?????????", ItemCode)
-                ChangeDialog(ItemCode)
+                var itemCode = items[info.position]!!.substringAfterLast("\n")
+                changeDialog(itemCode)
 
                 return true
             }
             R.id.EditDetailsProduct ->{
                 val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-                var ItemCode = Items[info.position]!!.substringAfterLast("\n")
+                var itemCode = items[info.position]!!.substringAfterLast("\n")
                 val intent = Intent(this, SearchActivity::class.java)
-                intent.putExtra("ItemCode", ItemCode)
+                intent.putExtra("ItemCode", itemCode)
                 startActivity(intent)
 
                 return true

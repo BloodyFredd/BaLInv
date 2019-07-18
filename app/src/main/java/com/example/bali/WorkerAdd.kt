@@ -5,12 +5,10 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import android.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -73,7 +71,6 @@ class WorkerAdd : AppCompatActivity() {
                     mProgressBar!!.dismiss()
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
                         val userId = mAuth!!.currentUser!!.uid
                         //Verify Email
                         verifyEmail()
@@ -85,7 +82,6 @@ class WorkerAdd : AppCompatActivity() {
                         updateUserInfoAndUI()
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
 
                         Toast.makeText(this@WorkerAdd, "האימות שגוי",
                             Toast.LENGTH_SHORT).show()
@@ -110,10 +106,9 @@ class WorkerAdd : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this@WorkerAdd,
-                        "נשלח מייל אימות ל-" + mUser.getEmail(),
+                        "נשלח מייל אימות ל-" + mUser.email,
                         Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e(TAG, "sendEmailVerification", task.exception)
                     Toast.makeText(this@WorkerAdd,
                         "לא ניתן לשלוח מייל אימות",
                         Toast.LENGTH_SHORT).show()

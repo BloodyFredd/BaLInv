@@ -40,14 +40,14 @@ class WorkerMenu : AppCompatActivity() {
         mDatabaseReference = mDatabase!!.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
 
-        val SearchbtnOpenActivity: Button = findViewById(R.id.search_product)
-        SearchbtnOpenActivity.setOnClickListener {
+        val searchbtnOpenActivity: Button = findViewById(R.id.search_product)
+        searchbtnOpenActivity.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
-        val AddingbtnOpenActivity: Button = findViewById(R.id.add_product_button)
-        AddingbtnOpenActivity.setOnClickListener {
+        val addingbtnOpenActivity: Button = findViewById(R.id.add_product_button)
+        addingbtnOpenActivity.setOnClickListener {
             val intent = Intent(this, WorkerActivity::class.java)
             startActivity(intent)
         }
@@ -75,10 +75,10 @@ class WorkerMenu : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
-        val id = item.getItemId()
+        val id = item.itemId
 
         if (id == R.id.logout) {
-            ConfirmationDialog()
+            confirmationDialog()
             return true
         }
 
@@ -87,7 +87,7 @@ class WorkerMenu : AppCompatActivity() {
 
     }
 
-    fun ConfirmationDialog(): Int {
+    private fun confirmationDialog(): Int {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.confirmation_deleteworker, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(this)
@@ -95,8 +95,8 @@ class WorkerMenu : AppCompatActivity() {
         //show dialog
 
         val  mAlertDialog = mBuilder.show()
-        var ConfTextView: TextView = mAlertDialog.findViewById<View>(R.id.Confirmation) as TextView
-        ConfTextView!!.setText("האם אתה בטוח שברצונך להתנתק?")
+        var confTextView: TextView = mAlertDialog.findViewById<View>(R.id.Confirmation) as TextView
+        confTextView!!.text = "האם אתה בטוח שברצונך להתנתק?"
 
         //login button click of custom layout
         mDialogView.dialogYesBtn.setOnClickListener {
@@ -119,10 +119,10 @@ class WorkerMenu : AppCompatActivity() {
     }
 
     private fun logout() {
-        var Sp : SharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
-        Sp!!.edit().putBoolean("logged",false).apply()
-        var UserSp : SharedPreferences = getSharedPreferences("Mail", Context.MODE_PRIVATE)
-        UserSp!!.edit().putBoolean("Manager",false).apply()
+        var sp : SharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
+        sp!!.edit().putBoolean("logged",false).apply()
+        var userSp : SharedPreferences = getSharedPreferences("Mail", Context.MODE_PRIVATE)
+        userSp!!.edit().putBoolean("Manager",false).apply()
         FirebaseAuth.getInstance().signOut()
         finish()
         val intent = Intent(this@WorkerMenu, LoginActivity::class.java)

@@ -12,7 +12,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : AppCompatActivity() {
-    private val TAG = "ForgotPasswordActivity"
     //UI elements
     private var etEmail: EditText? = null
     private var btnSubmit: Button? = null
@@ -42,11 +41,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val message = "נשלח מייל"
-                        Log.d(TAG, message)
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                         updateUI()
                     } else {
-                        Log.w(TAG, task.exception!!.message)
                         Toast.makeText(this, "לא נמצא משתמש עם מייל כזה", Toast.LENGTH_SHORT).show()
                     }
                 }

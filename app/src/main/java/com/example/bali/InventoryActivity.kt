@@ -19,38 +19,39 @@ class InventoryActivity : AppCompatActivity() {
     private var mDatabaseReference: DatabaseReference? = null
     private var mDatabaseReferenceInventory: DatabaseReference? = null
     private var mDatabase: FirebaseDatabase? = null
-    private var DeleteInv: Button? = null
-    private var FinishCountBtn: Button? = null
+    private var deleteInv: Button? = null
+    private var finishCountBtn: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = "בדיקת מלאי                                                     "
         setContentView(R.layout.activity_inventory)
-        val PercentagebtnOpenActivity: Button = findViewById(R.id.AddPercentage)
-        PercentagebtnOpenActivity.setOnClickListener {
+        val percentageBtnOpenActivity: Button = findViewById(R.id.AddPercentage)
+        percentageBtnOpenActivity.setOnClickListener {
             val intent = Intent(this, WorkingPercentageActivity::class.java)
             startActivity(intent)
         }
-        val InventoryCountsBtn: Button = findViewById(R.id.InventoryCounts)
-        InventoryCountsBtn.setOnClickListener {
+        val inventoryCountsBtn: Button = findViewById(R.id.InventoryCounts)
+        inventoryCountsBtn.setOnClickListener {
             val intent = Intent(this, InventoryCounts::class.java)
             startActivity(intent)
         }
-        FinishCountBtn = findViewById<View>(R.id.FinishCount) as Button
+        finishCountBtn = findViewById<View>(R.id.FinishCount) as Button
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
-        DeleteInv = findViewById<View>(R.id.DeleteInv) as Button
-        DeleteInv!!.setOnClickListener {
-            ConfirmationDialog("Delete")
+        deleteInv = findViewById<View>(R.id.DeleteInv) as Button
+        deleteInv!!.setOnClickListener {
+            confirmationDialog("Delete")
 
         }
-        FinishCountBtn!!.setOnClickListener {
+        finishCountBtn!!.setOnClickListener {
 
-            ConfirmationDialog("Finish")
+            confirmationDialog("Finish")
         }
 
     }
 
-    fun ConfirmationDialog(PCode: String): Int {
+    private fun confirmationDialog(PCode: String): Int {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.confirmation_dialog, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(this)
@@ -63,14 +64,14 @@ class InventoryActivity : AppCompatActivity() {
             mAlertDialog.dismiss()
             //get text from EditTexts of custom layout
 
-            val Code = mDialogView.Percentage.text.toString()
+            val code = mDialogView.Percentage.text.toString()
             //set the input text in TextView
-            if(Code == "nisim0309") {
+            if(code == "nisim0309") {
                 Toast.makeText(applicationContext, "מבצע...", Toast.LENGTH_LONG).show()
                 if(PCode == "Delete")
-                    DeleteInvertory()
+                    deleteInventory()
                 if(PCode == "Finish")
-                    FinishCount()
+                    finishCount()
             }
         }
         //cancel button click of custom layout
@@ -81,7 +82,7 @@ class InventoryActivity : AppCompatActivity() {
         return 1
     }
 
-    fun DeleteInvertory()
+    private fun deleteInventory()
     {
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
@@ -101,41 +102,41 @@ class InventoryActivity : AppCompatActivity() {
         })
     }
 
-    fun FinishCount()
+    fun finishCount()
     {
         mDatabase = FirebaseDatabase.getInstance()
         mDatabaseReference = mDatabase!!.reference.child("Items")
-        var Sum = 0.0
+        var sum = 0.0
         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val childes = snapshot.children
-                var PercentageAmount = 0.0
-                var ProductAmount = 0.0
-                var ProductBuyingPrice = 0.0
+                var percentageAmount = 0.0
+                var productAmount = 0.0
+                var productBuyingPrice = 0.0
                 for (Ks in childes) {
                     //val currentChild = mDatabaseReference!!.child(Ks.key.toString())
-                    PercentageAmount = (Ks.child("Percentages").value as? String)!!.toDouble()
-                    ProductAmount = (Ks.child("ProductAmount").value as? String)!!.toDouble()
-                    ProductBuyingPrice = (Ks.child("SalePrice").value as? String)!!.toDouble()
+                    percentageAmount = (Ks.child("Percentages").value as? String)!!.toDouble()
+                    productAmount = (Ks.child("ProductAmount").value as? String)!!.toDouble()
+                    productBuyingPrice = (Ks.child("SalePrice").value as? String)!!.toDouble()
 
-                    if(PercentageAmount != 0.0 && ProductAmount != 0.0) {
-                        PercentageAmount = ((100-PercentageAmount)/100)
-                        ProductBuyingPrice = (ProductBuyingPrice/1.17)*PercentageAmount
-                        Sum += ProductAmount*ProductBuyingPrice
+                    if(percentageAmount != 0.0 && productAmount != 0.0) {
+                        percentageAmount = ((100-percentageAmount)/100)
+                        productBuyingPrice = (productBuyingPrice/1.17)*percentageAmount
+                        sum += productAmount*productBuyingPrice
                     }
-                    PercentageAmount= 0.0
-                    ProductAmount = 0.0
-                    ProductBuyingPrice = 0.0
+                    percentageAmount= 0.0
+                    productAmount = 0.0
+                    productBuyingPrice = 0.0
 
                 }
                 mDatabaseReferenceInventory = mDatabase!!.reference.child("InventoryCounts")
                 val s = SimpleDateFormat("yyyy")
                 val format = s.format(Date())
 
-                mDatabaseReferenceInventory!!.child(format).setValue(Sum)
-                Sum = 0.0
+                mDatabaseReferenceInventory!!.child(format).setValue(sum)
+                sum = 0.0
                 mDatabaseReference!!.removeEventListener(this)
             }
         })

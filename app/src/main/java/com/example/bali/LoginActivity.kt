@@ -17,7 +17,6 @@ import com.google.firebase.database.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private val TAG = "LoginActivity"
     //global variables
     private var email: String? = null
     private var password: String? = null
@@ -26,12 +25,10 @@ class LoginActivity : AppCompatActivity() {
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
     private var btnLogin: Button? = null
-    private var btnCreateAccount: Button? = null
     private var mProgressBar: ProgressDialog? = null
-    //Firebase references
     private var mAuth: FirebaseAuth? = null
-    var Sp : SharedPreferences? = null
-    var UserSp : SharedPreferences? = null
+    var sp : SharedPreferences? = null
+    var userSp : SharedPreferences? = null
     private var mDatabase: FirebaseDatabase? = null
     private var mDatabaseReference: DatabaseReference? = null
 
@@ -50,8 +47,8 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        val ManagerbtnOpenActivity : Button = findViewById(R.id.Manager)
-        ManagerbtnOpenActivity.setOnClickListener {
+        val managerBtnOpenActivity : Button = findViewById(R.id.Manager)
+        managerBtnOpenActivity.setOnClickListener {
             val inten = Intent(this, ManagerActivity::class.java)
             startActivity(inten)
 
@@ -66,24 +63,20 @@ class LoginActivity : AppCompatActivity() {
         etEmail = findViewById<View>(R.id.email) as EditText
         etPassword = findViewById<View>(R.id.password) as EditText
         btnLogin = findViewById<View>(R.id.sign_in) as Button
-        //btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
         mProgressBar = ProgressDialog(this)
         mAuth = FirebaseAuth.getInstance()
 
         tvForgotPassword!!
             .setOnClickListener { startActivity(Intent(this@LoginActivity,
                 ForgotPasswordActivity::class.java)) }
-        //btnCreateAccount!!
-        //    .setOnClickListener { startActivity(Intent(this@LoginActivity,
-        //        CreateAccountActivity::class.java)) }
         btnLogin!!.setOnClickListener { loginUser() }
-        Sp = getSharedPreferences("login", Context.MODE_PRIVATE)
-        UserSp = getSharedPreferences("Mail", Context.MODE_PRIVATE)
-        if(Sp!!.getBoolean("logged",false))
+        sp = getSharedPreferences("login", Context.MODE_PRIVATE)
+        userSp = getSharedPreferences("Mail", Context.MODE_PRIVATE)
+        if(sp!!.getBoolean("logged",false))
         {
-            if(UserSp!!.getBoolean("Manager",false))
+            if(userSp!!.getBoolean("Manager",false))
             {
-                ManagerupdateUI()
+                managerUpdateUI()
             }
             else
                 updateUI()
@@ -99,25 +92,20 @@ class LoginActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             mProgressBar!!.setMessage("מבצע התחברות...")
             mProgressBar!!.show()
-            //Log.d(TAG, "Logging in user.")
             mAuth!!.signInWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
                     mProgressBar!!.hide()
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with signed-in user's information
-                        //Log.d(TAG, "signInWithEmail:success")
-
-
                         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                var userflag = snapshot.child(mAuth!!.currentUser!!.uid).child("flag").value.toString()
-                                if(userflag == "1") {
+                                var userFlag = snapshot.child(mAuth!!.currentUser!!.uid).child("flag").value.toString()
+                                if(userFlag == "1") {
                                     if (mail == "omriavidan0402hn@gmail.com") {
-                                        Sp!!.edit().putBoolean("logged", true).apply()
-                                        UserSp!!.edit().putBoolean("Manager", true).apply()
-                                        ManagerupdateUI()
+                                        sp!!.edit().putBoolean("logged", true).apply()
+                                        userSp!!.edit().putBoolean("Manager", true).apply()
+                                        managerUpdateUI()
                                     } else {
-                                        Sp!!.edit().putBoolean("logged", true).apply()
+                                        sp!!.edit().putBoolean("logged", true).apply()
                                         updateUI()
                                     }
                                     mProgressBar!!.dismiss()
@@ -133,8 +121,6 @@ class LoginActivity : AppCompatActivity() {
                         })
 
                     } else {
-                        // If sign in fails, display a message to the user.
-                        //Log.e(TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
                             Toast.LENGTH_SHORT).show()
                     }
@@ -150,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun ManagerupdateUI() {
+    private fun managerUpdateUI() {
 
         val intent = Intent(this@LoginActivity, ManagerActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
