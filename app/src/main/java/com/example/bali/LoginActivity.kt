@@ -99,15 +99,19 @@ class LoginActivity : AppCompatActivity() {
                         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 var userFlag = snapshot.child(mAuth!!.currentUser!!.uid).child("flag").value.toString()
-                                if(userFlag == "1" || userFlag == "2") {
-                                    if (mail == "omriavidan0402hn@gmail.com") {
-                                        sp!!.edit().putBoolean("logged", true).apply()
-                                        userSp!!.edit().putBoolean("Manager", true).apply()
-                                        managerUpdateUI()
-                                    } else {
-                                        sp!!.edit().putBoolean("logged", true).apply()
-                                        updateUI()
-                                    }
+                                if(userFlag == "1") {
+
+                                    sp!!.edit().putBoolean("logged", true).apply()
+                                    updateUI()
+                                    mProgressBar!!.dismiss()
+                                    mDatabaseReference!!.removeEventListener(this)
+                                    finish()
+                                }
+                                else if(userFlag == "2")
+                                {
+                                    sp!!.edit().putBoolean("logged", true).apply()
+                                    userSp!!.edit().putBoolean("Manager", true).apply()
+                                    managerUpdateUI()
                                     mProgressBar!!.dismiss()
                                     mDatabaseReference!!.removeEventListener(this)
                                     finish()
