@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
                         mDatabaseReference!!.addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 var userFlag = snapshot.child(mAuth!!.currentUser!!.uid).child("flag").value.toString()
-                                if(userFlag == "1") {
+                                if(userFlag == "1" || userFlag == "2") {
                                     if (mail == "omriavidan0402hn@gmail.com") {
                                         sp!!.edit().putBoolean("logged", true).apply()
                                         userSp!!.edit().putBoolean("Manager", true).apply()
@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                                     finish()
                                 }
                                 else
-                                    Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
+                                    Toast.makeText(this@LoginActivity, "1המייל ו/או הסיסמא שגויים",
                                         Toast.LENGTH_SHORT).show()
 
                             }
@@ -121,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
                         })
 
                     } else {
-                        Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
+                        Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים2",
                             Toast.LENGTH_SHORT).show()
                     }
                 }

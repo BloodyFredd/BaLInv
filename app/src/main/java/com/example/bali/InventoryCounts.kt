@@ -32,12 +32,6 @@ class InventoryCounts : AppCompatActivity() {
         mProgressBar = ProgressDialog(this)
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater = menuInflater
-        inflater.inflate(R.menu.remove_menu, menu)
-    }
-
     override fun onStart() {
         super.onStart()
         mDatabase = FirebaseDatabase.getInstance()

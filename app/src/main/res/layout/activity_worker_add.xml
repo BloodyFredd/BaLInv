@@ -33,11 +33,9 @@
                 android:id="@+id/toolbar_title" />
             </android.support.v7.widget.Toolbar>
     <!-- Login progress -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:gravity="center_horizontal"
             android:background="@color/colorBackgroundBlue"
             android:orientation="vertical"
@@ -74,7 +72,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/FirstName"
-                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"/>
 
@@ -89,7 +86,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/LastName"
-                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"/>
 
@@ -114,17 +110,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp">
 
-                <EditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="6"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:singleLine="true"/>
                 <Button
                         android:id="@+id/email_sign_in_button"
                         style="?android:textAppearanceSmall"
@@ -138,6 +123,17 @@
                         android:background="@drawable/blue_btn_pressed"
                         android:textColor="#E9FFFFFF"
                         android:textStyle="bold"/>
+
+                <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionId="6"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified"
+                        android:maxLines="1"
+                        android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
