@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                                     finish()
                                 }
                                 else
-                                    Toast.makeText(this@LoginActivity, "1המייל ו/או הסיסמא שגויים",
+                                    Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
                                         Toast.LENGTH_SHORT).show()
 
                             }
@@ -121,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
                         })
 
                     } else {
-                        Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים2",
+                        Toast.makeText(this@LoginActivity, "המייל ו/או הסיסמא שגויים",
                             Toast.LENGTH_SHORT).show()
                     }
                 }
