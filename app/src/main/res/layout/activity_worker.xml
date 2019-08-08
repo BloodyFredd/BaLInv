@@ -187,21 +187,29 @@
                     android:textSize="17sp"
                     android:background="@drawable/blue_btn_pressed"
                     android:textStyle="bold"/>
-        <LinearLayout
-                android:layout_width="300dp"
+        <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="35dp">
+>
             <Button
                     android:id="@+id/decrement"
                     style="?android:textAppearanceSmall"
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="left"
-                    android:layout_marginStart="-7dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/centerPoint"
                     android:singleLine="true"
                     android:background="@drawable/blue_minus_pressed"
-                    />
+            />
+
+            <TextView
+                    android:id="@+id/centerPoint"
+                    android:text=""
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
 
             <Button
                     android:id="@+id/Increment"
@@ -209,12 +217,13 @@
                     android:layout_width="95dp"
                     android:layout_height="95dp"
                     android:layout_gravity="right"
-                    android:layout_marginLeft="120dp"
                     android:singleLine="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/centerPoint"
                     android:background="@drawable/blue_plus_pressed"
-                    />
-        </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-    </LinearLayout>
+            />
+</RelativeLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>
 </LinearLayout>
